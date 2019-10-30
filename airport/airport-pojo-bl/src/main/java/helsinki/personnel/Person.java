@@ -38,7 +38,7 @@ import ua.com.fielden.platform.utils.Pair;
 @DescRequired
 @DisplayDescription
 public class Person extends ActivatableAbstractEntity<String> {
-
+    
     private static final Pair<String, String> entityTitleAndDesc = TitlesDescsGetter.getEntityTitleAndDesc(Person.class);
     public static final String ENTITY_TITLE = entityTitleAndDesc.getKey();
     public static final String ENTITY_DESC = entityTitleAndDesc.getValue();

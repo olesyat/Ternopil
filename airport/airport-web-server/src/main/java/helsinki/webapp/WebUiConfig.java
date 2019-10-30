@@ -3,12 +3,11 @@ package helsinki.webapp;
 import org.apache.commons.lang.StringUtils;
 
 import helsinki.config.personnel.PersonWebUiConfig;
-
+import helsinki.webapp.config.asset.tablecodes.AssetClassWebUiConfig;
 import ua.com.fielden.platform.basic.config.Workflows;
-import ua.com.fielden.platform.web.resources.webui.AbstractWebUiConfig;
 import ua.com.fielden.platform.web.app.config.IWebUiBuilder;
 import ua.com.fielden.platform.web.interfaces.ILayout.Device;
-
+import ua.com.fielden.platform.web.resources.webui.AbstractWebUiConfig;
 import ua.com.fielden.platform.web.resources.webui.UserRoleWebUiConfig;
 import ua.com.fielden.platform.web.resources.webui.UserWebUiConfig;
 
@@ -70,7 +69,8 @@ public class WebUiConfig extends AbstractWebUiConfig {
         final UserWebUiConfig userWebUiConfig = new UserWebUiConfig(injector());
         final UserRoleWebUiConfig userRoleWebUiConfig = new UserRoleWebUiConfig(injector());
 
-
+        // Asset table codes
+        final AssetClassWebUiConfig assetClassWebUiConfig =AssetClassWebUiConfig.register(injector(), builder);
         // Configure application web resources such as masters and centres
         configApp()
         .addMaster(userWebUiConfig.master)
@@ -92,9 +92,10 @@ public class WebUiConfig extends AbstractWebUiConfig {
                 .addMenuItem("Personnel").description("Personnel related data")
                     .addMenuItem("Personnel").description("Personnel Centre").centre(personWebUiConfig.centre).done()
                 .done()
+                .addMenuItem("Assets").description("Asset related data").centre(assetClassWebUiConfig.centre).done()
                 .addMenuItem("Users").description("Users related data")
-                    .addMenuItem("Users").description("User centre").centre(userWebUiConfig.centre).done()
-                    .addMenuItem("User Roles").description("User roles centre").centre(userRoleWebUiConfig.centre).done()
+                .addMenuItem("Users").description("User centre").centre(userWebUiConfig.centre).done()
+                .addMenuItem("User Roles").description("User roles centre").centre(userRoleWebUiConfig.centre).done()
                 .done()
             .done().done()
         .setLayoutFor(Device.DESKTOP, null, "[[[]]]")
