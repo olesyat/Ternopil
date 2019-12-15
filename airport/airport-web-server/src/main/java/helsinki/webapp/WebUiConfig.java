@@ -1,10 +1,16 @@
 package helsinki.webapp;
 
+import static java.lang.String.format;
+
 import org.apache.commons.lang.StringUtils;
 
-import helsinki.asset.tablecodes.AssetClass;
+import helsinki.assets.Asset;
 import helsinki.config.personnel.PersonWebUiConfig;
-import helsinki.webapp.config.asset.tablecodes.AssetClassWebUiConfig;
+import helsinki.tablecodes.asset.AssetClass;
+import helsinki.tablecodes.asset.AssetType;
+import helsinki.webapp.config.assets.AssetWebUiConfig;
+import helsinki.webapp.config.tablecodes.asset.AssetClassWebUiConfig;
+import helsinki.webapp.config.tablecodes.asset.AssetTypeWebUiConfig;
 import ua.com.fielden.platform.basic.config.Workflows;
 import ua.com.fielden.platform.web.app.config.IWebUiBuilder;
 import ua.com.fielden.platform.web.interfaces.ILayout.Device;
@@ -25,7 +31,7 @@ public class WebUiConfig extends AbstractWebUiConfig {
     private final int port;
 
     public WebUiConfig(final String domainName, final int port, final Workflows workflow, final String path) {
-        super("Ternopil Airport Asset Management(development)", workflow, new String[] { "helsinki/" });
+        super("Ternopil Airport Asset Management (development)", workflow, new String[] { "helsinki/" });
         if (StringUtils.isEmpty(domainName) || StringUtils.isEmpty(path)) {
             throw new IllegalArgumentException("Both the domain name and application binding path should be specified.");
         }
@@ -69,11 +75,16 @@ public class WebUiConfig extends AbstractWebUiConfig {
         final PersonWebUiConfig personWebUiConfig = PersonWebUiConfig.register(injector(), builder);
         final UserWebUiConfig userWebUiConfig = new UserWebUiConfig(injector());
         final UserRoleWebUiConfig userRoleWebUiConfig = new UserRoleWebUiConfig(injector());
-
-        //UI for table codes for assets 
+        
+        // Asset table codes
         final AssetClassWebUiConfig assetClassWebUiConfig = AssetClassWebUiConfig.register(injector(), builder);
+        final AssetTypeWebUiConfig assetTypeWebUiConfig = AssetTypeWebUiConfig.register(injector(), builder);
         
+        // Asset
+        final AssetWebUiConfig assetWebUiConfig = AssetWebUiConfig.register(injector(), builder);
         
+
+
         // Configure application web resources such as masters and centres
         configApp()
         .addMaster(userWebUiConfig.master)
@@ -86,30 +97,44 @@ public class WebUiConfig extends AbstractWebUiConfig {
 
         // Configure application menu
         configDesktopMainMenu().
+        addModule("Asset Acquisition").
+            description("Asset acquisition module").
+            icon("mainMenu:equipment").
+            detailIcon("mainMenu:equipment").
+            bgColor("#80d6ff").
+            captionBgColor("#42a5f5").menu()
+                .addMenuItem(Asset.ENTITY_TITLE).description(format("%s Centre", Asset.ENTITY_TITLE)).centre(assetWebUiConfig.centre).done()
+                .done().done().
             addModule("Users / Personnel").
                 description("Provides functionality for managing application security and personnel data.").
                 icon("mainMenu:help").
-                detailIcon("mainMenu:help").
-                bgColor("#FFE680").
-                captionBgColor("#FFD42A").menu()
-                .addMenuItem("Asset Class").description("Asset Class centre").centre(assetClassWebUiConfig.centre).done()
-                
-                .addMenuItem("AssetTable Codes").description("Various master data for assets")
-                .addMenuItem(AssetClass.ENTITY_TITLE).description(String.format("%s Centre", AssetClass.ENTITY_TITLE))
-                .centre(assetClassWebUiConfig.centre).done()
-                .done()
-                
+                detailIcon("anotherMainMenu:about").
+                bgColor("#c8ff75").
+                captionBgColor("#94ce44").menu()
                 .addMenuItem("Personnel").description("Personnel related data")
                     .addMenuItem("Personnel").description("Personnel Centre").centre(personWebUiConfig.centre).done()
                 .done()
                 .addMenuItem("Users").description("Users related data")
                     .addMenuItem("Users").description("User centre").centre(userWebUiConfig.centre).done()
                     .addMenuItem("User Roles").description("User roles centre").centre(userRoleWebUiConfig.centre).done()
-                .done()
-            .done().done()
-        .setLayoutFor(Device.DESKTOP, null, "[[[]]]")
-        .setLayoutFor(Device.TABLET, null, "[[[]]]")
-        .setLayoutFor(Device.MOBILE, null, "[[[]]]")
+                .done().
+            done().done().
+            addModule("Table Codes").
+                description("Table Codes Description").
+                icon("mainMenu:tablecodes").
+                detailIcon("mainMenu:tablecodes").
+                bgColor("#FFE680").
+                captionBgColor("#FFD42A").menu()
+                .addMenuItem("Asset Table Codes").description("Various master data for assets.")
+                    .addMenuItem(AssetClass.ENTITY_TITLE).description(String.format("%s Centre", AssetClass.ENTITY_TITLE))
+                    .centre(assetClassWebUiConfig.centre).done()
+                    .addMenuItem(AssetType.ENTITY_TITLE).description(String.format("%s Centre", AssetType.ENTITY_TITLE))
+                    .centre(assetTypeWebUiConfig.centre).done()
+                .done().
+            done().done()
+        .setLayoutFor(Device.DESKTOP, null, "[[[{\"rowspan\":2}], []], [[]]]")
+        .setLayoutFor(Device.TABLET, null,  "[[[{\"rowspan\":2}], []], [[]]]")
+        .setLayoutFor(Device.MOBILE, null, "[[[]],[[]], [[]]]")
         .minCellWidth(100).minCellHeight(148).done();
     }
 

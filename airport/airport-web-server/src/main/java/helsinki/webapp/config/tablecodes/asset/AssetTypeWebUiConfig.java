@@ -31,16 +31,16 @@ import ua.com.fielden.platform.web.PrefDim.Unit;
  * @author Developers
  *
  */
-public class AssetClassWebUiConfig {
+public class AssetTypeWebUiConfig {
 
     public final EntityCentre<AssetClass> centre;
     public final EntityMaster<AssetClass> master;
 
-    public static AssetClassWebUiConfig register(final Injector injector, final IWebUiBuilder builder) {
-        return new AssetClassWebUiConfig(injector, builder);
+    public static AssetTypeWebUiConfig register(final Injector injector, final IWebUiBuilder builder) {
+        return new AssetTypeWebUiConfig(injector, builder);
     }
 
-    private AssetClassWebUiConfig(final Injector injector, final IWebUiBuilder builder) {
+    private AssetTypeWebUiConfig(final Injector injector, final IWebUiBuilder builder) {
         centre = createCentre(injector, builder);
         builder.register(centre);
         master = createMaster(injector);
