@@ -31,7 +31,7 @@ public class WebUiConfig extends AbstractWebUiConfig {
     private final int port;
 
     public WebUiConfig(final String domainName, final int port, final Workflows workflow, final String path) {
-        super("Ternopil Airport Asset Management (development)", workflow, new String[] { "helsinki/" });
+        super("Helsinki Airport Asset Management (development)", workflow, new String[] { "helsinki/" });
         if (StringUtils.isEmpty(domainName) || StringUtils.isEmpty(path)) {
             throw new IllegalArgumentException("Both the domain name and application binding path should be specified.");
         }
@@ -84,7 +84,6 @@ public class WebUiConfig extends AbstractWebUiConfig {
         final AssetWebUiConfig assetWebUiConfig = AssetWebUiConfig.register(injector(), builder);
         
 
-
         // Configure application web resources such as masters and centres
         configApp()
         .addMaster(userWebUiConfig.master)
@@ -104,6 +103,7 @@ public class WebUiConfig extends AbstractWebUiConfig {
             bgColor("#80d6ff").
             captionBgColor("#42a5f5").menu()
                 .addMenuItem(Asset.ENTITY_TITLE).description(format("%s Centre", Asset.ENTITY_TITLE)).centre(assetWebUiConfig.centre).done()
+                
                 .done().done().
             addModule("Users / Personnel").
                 description("Provides functionality for managing application security and personnel data.").
