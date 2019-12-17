@@ -2,11 +2,9 @@ package helsinki.tablecodes.asset.ui_actions.producers;
 
 import com.google.inject.Inject;
 
+import helsinki.common.producers.AbstractProducerForOpenEntityMasterAction;
 import helsinki.tablecodes.asset.AssetClass;
 import helsinki.tablecodes.asset.ui_actions.OpenAssetClassMasterAction;
-import ua.com.fielden.platform.security.Authorise;
-import helsinki.security.tokens.open_compound_master.OpenAssetClassMasterAction_CanOpen_Token;
-import helsinki.common.producers.AbstractProducerForOpenEntityMasterAction;
 import ua.com.fielden.platform.entity.factory.EntityFactory;
 import ua.com.fielden.platform.entity.factory.ICompanionObjectFinder;
 

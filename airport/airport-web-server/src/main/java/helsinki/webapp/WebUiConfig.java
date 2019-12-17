@@ -5,9 +5,11 @@ import static java.lang.String.format;
 import org.apache.commons.lang.StringUtils;
 
 import helsinki.assets.Asset;
+import helsinki.assets.AssetFinDet;
 import helsinki.config.personnel.PersonWebUiConfig;
 import helsinki.tablecodes.asset.AssetClass;
 import helsinki.tablecodes.asset.AssetType;
+import helsinki.webapp.config.assets.AssetFinDetWebUiConfig;
 import helsinki.webapp.config.assets.AssetWebUiConfig;
 import helsinki.webapp.config.tablecodes.asset.AssetClassWebUiConfig;
 import helsinki.webapp.config.tablecodes.asset.AssetTypeWebUiConfig;
@@ -83,6 +85,7 @@ public class WebUiConfig extends AbstractWebUiConfig {
         // Asset
         final AssetWebUiConfig assetWebUiConfig = AssetWebUiConfig.register(injector(), builder);
         
+        final AssetFinDetWebUiConfig assetFinDetWebUiConfig = AssetFinDetWebUiConfig.register(injector(), builder);
 
         // Configure application web resources such as masters and centres
         configApp()
@@ -103,7 +106,7 @@ public class WebUiConfig extends AbstractWebUiConfig {
             bgColor("#80d6ff").
             captionBgColor("#42a5f5").menu()
                 .addMenuItem(Asset.ENTITY_TITLE).description(format("%s Centre", Asset.ENTITY_TITLE)).centre(assetWebUiConfig.centre).done()
-                
+                .addMenuItem(AssetFinDet.ENTITY_TITLE).description(format("%s Centre", AssetFinDet.ENTITY_TITLE)).centre(assetFinDetWebUiConfig.centre).done()
                 .done().done().
             addModule("Users / Personnel").
                 description("Provides functionality for managing application security and personnel data.").

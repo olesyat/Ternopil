@@ -2,12 +2,10 @@ package helsinki.tablecodes.asset.master.menu.actions;
 
 import com.google.inject.Inject;
 
-import ua.com.fielden.platform.security.Authorise;
-import ua.com.fielden.platform.dao.annotations.SessionRequired;
-import helsinki.security.tokens.compound_master_menu.AssetClassMaster_OpenAssetType_MenuItem_CanAccess_Token;
 import ua.com.fielden.platform.dao.CommonEntityDao;
-import ua.com.fielden.platform.entity.query.IFilter;
+import ua.com.fielden.platform.dao.annotations.SessionRequired;
 import ua.com.fielden.platform.entity.annotation.EntityType;
+import ua.com.fielden.platform.entity.query.IFilter;
 /**
  * DAO implementation for companion object {@link IAssetClassMaster_OpenAssetType_MenuItem}.
  *
