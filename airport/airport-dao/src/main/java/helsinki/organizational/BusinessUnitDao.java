@@ -22,8 +22,6 @@ public class BusinessUnitDao extends CommonEntityDao<BusinessUnit> implements IB
 
     @Override
     protected IFetchProvider<BusinessUnit> createFetchProvider() {
-        // TODO: uncomment the following line and specify the properties, which are required for the UI in IBusinessUnit.FETCH_PROVIDER. Then remove the line after.
-        // return FETCH_PROVIDER;
-        throw new UnsupportedOperationException("Please specify the properties, which are required for the UI in IBusinessUnit.FETCH_PROVIDER");
+         return FETCH_PROVIDER;
     }
 }

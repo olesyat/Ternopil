@@ -5,6 +5,7 @@ import java.util.Date;
 import helsinki.organizational.BusinessUnit;
 import helsinki.organizational.Organization;
 import helsinki.organizational.Role;
+import helsinki.tablecodes.asset.definers.AssetTypeOwnershipExclusivityDefiner;
 import ua.com.fielden.platform.entity.AbstractPersistentEntity;
 import ua.com.fielden.platform.entity.DynamicEntityKey;
 import ua.com.fielden.platform.entity.annotation.CompanionObject;
@@ -16,8 +17,8 @@ import ua.com.fielden.platform.entity.annotation.KeyType;
 import ua.com.fielden.platform.entity.annotation.MapEntityTo;
 import ua.com.fielden.platform.entity.annotation.MapTo;
 import ua.com.fielden.platform.entity.annotation.Observable;
-import ua.com.fielden.platform.entity.annotation.Optional;
 import ua.com.fielden.platform.entity.annotation.Title;
+import ua.com.fielden.platform.entity.annotation.mutator.AfterChange;
 import ua.com.fielden.platform.reflection.TitlesDescsGetter;
 import ua.com.fielden.platform.utils.Pair;
 
@@ -54,18 +55,21 @@ public class AssetTypeOwnership extends AbstractPersistentEntity<DynamicEntityKe
     
     @IsProperty
     @MapTo
+    @AfterChange(AssetTypeOwnershipExclusivityDefiner.class)
     @Title(value = "Role", desc = "Role that owns assets of the specific asset Type")
     private Role role;
 
     
     @IsProperty
     @MapTo
+    @AfterChange(AssetTypeOwnershipExclusivityDefiner.class)
     @Title(value = "Business Unit", desc = "Business unit that owns assets of the specific asset Type")
     private BusinessUnit bu;
 
     
     @IsProperty
     @MapTo
+    @AfterChange(AssetTypeOwnershipExclusivityDefiner.class)
     @Title(value = "Organization", desc = "Organization that owns assets of the specific asset Type\"")
     private Organization org;
 

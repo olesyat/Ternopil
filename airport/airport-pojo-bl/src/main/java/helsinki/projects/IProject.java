@@ -13,8 +13,6 @@ import ua.com.fielden.platform.dao.IEntityDao;
 public interface IProject extends IEntityDao<Project> {
 
     static final IFetchProvider<Project> FETCH_PROVIDER = EntityUtils.fetch(Project.class)
-            .with(
-                    "name", "desc", "startDate", "finishDate"
-        );
+            .with("name", "desc", "startDate", "finishDate");
 
 }

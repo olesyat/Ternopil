@@ -20,8 +20,7 @@ public class AssetFinDetAcquireDateWithinProjectPeriodValidator extends Abstract
 
     @Override
     public Result handle(final MetaProperty<Date> property, final Date newValue, final Set<Annotation> mutatorAnnotations) {
-        final AssetFinDet finDet = property.getEntity();
-        if (finDet.getProject() == null || newValue == null) {
+        final AssetFinDet finDet = property.getEntity();        if (finDet.getProject() == null || newValue == null) {
             return successful(newValue);
         }
         

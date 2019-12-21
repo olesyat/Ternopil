@@ -15,7 +15,11 @@ import helsinki.assets.Asset;
 import helsinki.assets.AssetFinDet;
 import helsinki.assets.IAssetFinDet;
 import helsinki.config.ApplicationDomain;
+import helsinki.organizational.BusinessUnit;
+import helsinki.organizational.Organization;
+import helsinki.organizational.Role;
 import helsinki.personnel.Person;
+import helsinki.projects.Project;
 import helsinki.tablecodes.asset.AssetClass;
 import helsinki.tablecodes.asset.AssetType;
 import ua.com.fielden.platform.devdb_support.DomainDrivenDataPopulation;
@@ -36,7 +40,7 @@ import ua.com.fielden.platform.utils.DbUtils;
  * 
  * <p>
  * 
- * @author TG Team
+ * @author Ternopil Team
  * 
  */
 public class PopulateDb extends DomainDrivenDataPopulation {
@@ -81,12 +85,12 @@ public class PopulateDb extends DomainDrivenDataPopulation {
     protected void populateDomain() {
         LOGGER.info("Creating and populating the development database...");
         
-        setupUser(User.system_users.SU, "ternopil");
-        setupPerson(User.system_users.SU, "ternopil");
+        setupUser(User.system_users.SU, "helsinki");
+        setupPerson(User.system_users.SU, "helsinki");
         
         final AssetClass as1 = save(new_(AssetClass.class).setName("AC1").setDesc("First description.").setActive(true));
-        save(new_(AssetClass.class).setName("AC2").setDesc("First description."));
-        save(new_(AssetType.class).setName("AT1").setDesc("First description.").setAssetClass(as1));
+        save(new_(AssetClass.class).setName("AC2").setActive(true).setDesc("First description."));
+        save(new_(AssetType.class).setName("AT1").setDesc("First description.").setAssetClass(as1).setActive(true));
         
         final Asset asset1 = save(new_(Asset.class).setDesc("a demo asset 1"));
         final Asset asset2 = save(new_(Asset.class).setDesc("a demo asset 2"));
@@ -99,8 +103,17 @@ public class PopulateDb extends DomainDrivenDataPopulation {
         final AssetFinDet finDet3 = co$(AssetFinDet.class).findById(asset3.getId(), IAssetFinDet.FETCH_PROVIDER.fetchModel());
         save(finDet3.setInitCost(Money.of("10.00")));
         
+        save(new_(Project.class).setName("PROJECT 1").setStartDate(date("2019-12-08 00:00:00")).setDesc("Project 1 description"));
+        save(new_(Project.class).setName("PROJECT 2").setStartDate(date("2020-01-02 00:00:00")).setDesc("Project 2 description"));
+
+        
+        save(new_(Role.class).setName("R1").setDesc("First role"));
+        save(new_(BusinessUnit.class).setName("BU1").setDesc("First business unit"));
+        save(new_(Organization.class).setName("ORG1").setDesc("First organization"));
+        
+        
         LOGGER.info("Completed database creation and population.");
-	}
+    }
 
     private void setupPerson(final User.system_users defaultUser, final String emailDomain) {
         final User su = co(User.class).findByKey(defaultUser.name());
@@ -111,5 +124,9 @@ public class PopulateDb extends DomainDrivenDataPopulation {
     protected List<Class<? extends AbstractEntity<?>>> domainEntityTypes() {
         return applicationDomainProvider.entityTypes();
     }
+    
+    
+
+
 
 }

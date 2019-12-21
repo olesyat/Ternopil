@@ -30,4 +30,6 @@ public class AssetClass extends AbstractPersistentEntity<String> {
     public static final String ENTITY_TITLE = entityTitleAndDesc.getKey();
     public static final String ENTITY_DESC = entityTitleAndDesc.getValue();
 
+    
+    
 }
