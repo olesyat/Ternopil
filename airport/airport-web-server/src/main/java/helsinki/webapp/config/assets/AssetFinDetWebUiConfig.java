@@ -99,9 +99,8 @@ public class AssetFinDetWebUiConfig {
 
         final IMaster<AssetFinDet> masterConfig = new SimpleMasterBuilder<AssetFinDet>().forEntity(AssetFinDet.class)
                 .addProp("key").asAutocompleter().also()
-                .addProp("project").asAutocompleter().also()
                 .addProp("initCost").asMoney().also()
-                .addProp("acquireDate").asDateTimePicker().also()
+                .addProp("acquireDate").asDatePicker().also()
                 .addAction(MasterActions.REFRESH).shortDesc("Cancel").longDesc("Cancel action")
                 .addAction(MasterActions.SAVE)
                 .setActionBarLayoutFor(Device.DESKTOP, Optional.empty(), LayoutComposer.mkActionLayoutForMaster())

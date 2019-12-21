@@ -1,7 +1,6 @@
-package helsinki.assets;
+package helsinki.organizational;
 
-import ua.com.fielden.platform.entity.AbstractEntity;
-import ua.com.fielden.platform.entity.ActivatableAbstractEntity;
+import ua.com.fielden.platform.entity.AbstractPersistentEntity;
 import ua.com.fielden.platform.entity.DynamicEntityKey;
 import ua.com.fielden.platform.entity.annotation.KeyType;
 import ua.com.fielden.platform.entity.annotation.KeyTitle;
@@ -10,7 +9,6 @@ import ua.com.fielden.platform.entity.annotation.CompositeKeyMember;
 import ua.com.fielden.platform.entity.annotation.MapEntityTo;
 import ua.com.fielden.platform.entity.annotation.MapTo;
 import ua.com.fielden.platform.entity.annotation.Observable;
-import ua.com.fielden.platform.entity.annotation.Readonly;
 import ua.com.fielden.platform.entity.annotation.Title;
 import ua.com.fielden.platform.entity.annotation.DescTitle;
 import ua.com.fielden.platform.entity.annotation.DisplayDescription;
@@ -26,54 +24,35 @@ import ua.com.fielden.platform.utils.Pair;
  *
  */
 @KeyType(DynamicEntityKey.class)
-@KeyTitle("Asset Number")
-@CompanionObject(IAsset.class)
+@KeyTitle("Name")
+@CompanionObject(IOrganization.class)
 @MapEntityTo
 @DescTitle("Description")
 @DisplayDescription
 @DescRequired
-public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
+public class Organization extends AbstractPersistentEntity<DynamicEntityKey> {
 
-    private static final Pair<String, String> entityTitleAndDesc = TitlesDescsGetter.getEntityTitleAndDesc(Asset.class);
+    private static final Pair<String, String> entityTitleAndDesc = TitlesDescsGetter.getEntityTitleAndDesc(Organization.class);
     public static final String ENTITY_TITLE = entityTitleAndDesc.getKey();
     public static final String ENTITY_DESC = entityTitleAndDesc.getValue();
 
     @IsProperty
     @MapTo
-    @Title(value = "Number", desc = "A unique asset number, auto-generated.")
+    @Title(value = "Name", desc = "Organization name")
     @CompositeKeyMember(1)
-    @Readonly
-    private String number;
+    private String name;
+
+    @Observable
+    public Organization setName(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     
-    @IsProperty
-    @Title(value = "Fin Det", desc = "Financial details for this asset")
-    private AssetFinDet finDet;
 
-    @Observable
-    protected Asset setFinDet(final AssetFinDet finDet) {
-        this.finDet = finDet;
-        return this;
-    }
-
-    public AssetFinDet getFinDet() {
-        return finDet;
-    }
-
-    @Override
-    @Observable
-    public Asset setDesc(final String desc) {
-        super.setDesc(desc);
-        return this;
-    }
-
-    @Observable
-    public Asset setNumber(final String number) {
-        this.number = number;
-        return this;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
+    
 }

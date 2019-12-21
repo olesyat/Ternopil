@@ -2,7 +2,8 @@ package helsinki.assets;
 
 import java.util.Date;
 
-import ua.com.fielden.platform.entity.AbstractEntity;
+import helsinki.common.exceptions.AssetFinDetAcquiredDateWithinProjectPeriod;
+import helsinki.projects.Project;
 import ua.com.fielden.platform.entity.AbstractPersistentEntity;
 import ua.com.fielden.platform.entity.annotation.CompanionObject;
 import ua.com.fielden.platform.entity.annotation.DateOnly;
@@ -14,6 +15,8 @@ import ua.com.fielden.platform.entity.annotation.MapTo;
 import ua.com.fielden.platform.entity.annotation.Observable;
 import ua.com.fielden.platform.entity.annotation.SkipEntityExistsValidation;
 import ua.com.fielden.platform.entity.annotation.Title;
+import ua.com.fielden.platform.entity.annotation.mutator.BeforeChange;
+import ua.com.fielden.platform.entity.annotation.mutator.Handler;
 import ua.com.fielden.platform.reflection.TitlesDescsGetter;
 import ua.com.fielden.platform.types.Money;
 import ua.com.fielden.platform.utils.Pair;
@@ -48,7 +51,8 @@ public class AssetFinDet extends AbstractPersistentEntity<Asset> {
     @IsProperty
     @DateOnly
     @MapTo
-    @Title(value = "Acquire Date", desc = "The date when asset was made or purchased")
+    @Title(value = "Acquire Date", desc = "The date when asset was made or purnamechased")
+    @BeforeChange(@Handler(AssetFinDetAcquiredDateWithinProjectPeriod.class))
     private Date acquireDate;
 
     
@@ -73,8 +77,21 @@ public class AssetFinDet extends AbstractPersistentEntity<Asset> {
     public Date getAcquireDate() {
         return acquireDate;
     }
-
     
+    @IsProperty
+    @MapTo
+    @Title(value ="Project", desc = "Capes project for the acquisition of this asset")
+    private Project project;
+
+    @Observable
+    public AssetFinDet setProject(final Project project) {
+        this.project = project;
+        return this;
+    }
+
+    public Project getProject() {
+        return project;
+    }
 
     
     @Observable
