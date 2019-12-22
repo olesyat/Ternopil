@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 import helsinki.assets.Asset;
 import helsinki.assets.AssetFinDet;
+import helsinki.assets.errors.AssetErrorInteruptionReport;
 import helsinki.config.personnel.PersonWebUiConfig;
 import helsinki.projects.Project;
 import helsinki.tablecodes.asset.AssetClass;
@@ -15,6 +16,7 @@ import helsinki.tablecodes.asset.AssetTypeOwnership;
 import helsinki.webapp.config.assets.AssetFinDetWebUiConfig;
 import helsinki.webapp.config.assets.AssetServiceStatusWebUiConfig;
 import helsinki.webapp.config.assets.AssetWebUiConfig;
+import helsinki.webapp.config.assets.errors.AssetErrorInteruptionReportWebUiConfig;
 import helsinki.webapp.config.projects.ProjectWebUiConfig;
 import helsinki.webapp.config.tablecodes.asset.AssetClassWebUiConfig;
 import helsinki.webapp.config.tablecodes.asset.AssetTypeOperatorWebUiConfig;
@@ -91,6 +93,8 @@ public class WebUiConfig extends AbstractWebUiConfig {
         final AssetTypeOwnershipWebUiConfig assetTypeOwnershipWebUiConfig = AssetTypeOwnershipWebUiConfig.register(injector(), builder);
         final AssetTypeOperatorWebUiConfig assetTypeOperatorWebUiConfig = AssetTypeOperatorWebUiConfig.register(injector(), builder);
         
+        //Error Messages 
+        final AssetErrorInteruptionReportWebUiConfig assetErrorInteruptionReportWebUiConfig = AssetErrorInteruptionReportWebUiConfig.register(injector(), builder);
         
         // Asset
         final AssetWebUiConfig assetWebUiConfig = AssetWebUiConfig.register(injector(), builder);        
@@ -149,6 +153,7 @@ public class WebUiConfig extends AbstractWebUiConfig {
                     .addMenuItem(AssetType.ENTITY_TITLE).description(String.format("%s Centre", AssetType.ENTITY_TITLE)).centre(assetTypeWebUiConfig.centre).done()
                     .addMenuItem(AssetTypeOwnership.ENTITY_TITLE).description(String.format("%s Centre", AssetTypeOwnership.ENTITY_TITLE)).centre(assetTypeOwnershipWebUiConfig.centre).done()
                     .addMenuItem(AssetTypeOperator.ENTITY_TITLE).description(String.format("%s Centre", AssetTypeOperator.ENTITY_TITLE)).centre(assetTypeOperatorWebUiConfig.centre).done()
+                    .addMenuItem(AssetErrorInteruptionReport.ENTITY_TITLE).description(String.format("%s Centre", AssetErrorInteruptionReport.ENTITY_TITLE)).centre(assetErrorInteruptionReportWebUiConfig.centre).done()
 
                     .done().
             done().done()

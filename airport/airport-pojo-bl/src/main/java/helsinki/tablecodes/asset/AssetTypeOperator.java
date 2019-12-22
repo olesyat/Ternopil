@@ -7,6 +7,7 @@ import helsinki.organizational.Organization;
 import helsinki.organizational.Role;
 import helsinki.tablecodes.asset.definers.AssetTypeOperatorExclusivityDefiner;
 import ua.com.fielden.platform.entity.AbstractPersistentEntity;
+import ua.com.fielden.platform.entity.DynamicEntityKey;
 import ua.com.fielden.platform.entity.annotation.CompanionObject;
 import ua.com.fielden.platform.entity.annotation.CompositeKeyMember;
 import ua.com.fielden.platform.entity.annotation.DateOnly;
@@ -26,11 +27,11 @@ import ua.com.fielden.platform.utils.Pair;
  * @author Developers
  *
  */
-@KeyType(String.class)
+@KeyType(DynamicEntityKey.class)
 @KeyTitle("Key")
 @CompanionObject(IAssetTypeOperator.class)
 @MapEntityTo
-public class AssetTypeOperator extends AbstractPersistentEntity<String> {
+public class AssetTypeOperator extends AbstractPersistentEntity<DynamicEntityKey> {
 
     private static final Pair<String, String> entityTitleAndDesc = TitlesDescsGetter.getEntityTitleAndDesc(AssetTypeOperator.class);
     public static final String ENTITY_TITLE = entityTitleAndDesc.getKey();

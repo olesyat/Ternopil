@@ -37,7 +37,22 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     private static final Pair<String, String> entityTitleAndDesc = TitlesDescsGetter.getEntityTitleAndDesc(Asset.class);
     public static final String ENTITY_TITLE = entityTitleAndDesc.getKey();
     public static final String ENTITY_DESC = entityTitleAndDesc.getValue();
+// We assume that each concrete Asset has a possibility to report about its problem. 
+//  However, we can implement Regulatory attribute as an user input while creating an Asset object.
+    
+    
+    @IsProperty
+    @MapTo
+    @Title(value = "Regulatory", desc = "Indication of whether this asset is regulatory")
+    private boolean regulatory;
 
+    
+    @IsProperty
+    @MapTo
+    @Title(value = "Key Asset", desc = "Indication of whether this asset is key asset")
+    private boolean keyAsset;
+    
+        
     @IsProperty
     @MapTo
     @Title(value = "Number", desc = "A unique asset number, auto-generated.")
@@ -48,7 +63,18 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     @IsProperty
     @Title(value = "Fin Det", desc = "Financial details for this asset")
     private AssetFinDet finDet;
+    
+    @IsProperty
+    @Title(value = "Days to expiration", desc = "Hom many days we can use that Asset")
+    private int expDays;
 
+    
+
+    @IsProperty
+    @Title(value = "Service Status", desc = "Service Status of this asset")
+    private AssetServiceStatus serviceStatus;
+
+    
     @Observable
     protected Asset setFinDet(final AssetFinDet finDet) {
         this.finDet = finDet;
@@ -58,27 +84,67 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     public AssetFinDet getFinDet() {
         return finDet;
     }
-
-    @IsProperty
-    @Title(value = "Service Status", desc = "Service Status of this asset")
-    private AssetServiceStatus serviceStatus;
-
-    @Observable
-    public Asset setName(final AssetServiceStatus serviceStatus) {
-        this.serviceStatus = serviceStatus;
+    
+    
+    public Asset setRegulatory(final Boolean regulatory) {
+        this.regulatory = regulatory;
         return this;
     }
-
-    public AssetServiceStatus getServiceStatus() {
-        return serviceStatus;
+    
+    public Boolean getRegulatory() {
+        return regulatory;
     }
-
+    
+    public Asset setKeyAsset(final Boolean keyAsset) {
+        this.keyAsset = keyAsset;
+        return this;
+    }
+    
+    public Boolean getKeyAsset() {
+        return keyAsset;
+    }
+    
+    public Asset setNumberOfExpirationDays(final int expDays) {
+     this.expDays = expDays;
+     return this;
+    }
+    
+    public int getNumberOfExpirationDays() {
+     return expDays;
+    }
+    
+    public int getActiveDays() {
+     // this function returns number of active days of Asset from DataBase
+     // in the future we can implement it
+     // int activeDays = returnActiveFromDb
+     int activeDays = 10; //hardcoded
+     return activeDays;
+    }
+    
+    
+    public float getUsageRate() {
+     float expDays = getNumberOfExpirationDays();
+     float sumActiveDays = getActiveDays();
+     
+     return sumActiveDays / expDays;
+    }
+    
     
     @Override
     @Observable
     public Asset setDesc(final String desc) {
         super.setDesc(desc);
         return this;
+    }
+    
+    @Observable
+    public Asset setServiceStatus(final AssetServiceStatus serviceStatus) {
+        this.serviceStatus = serviceStatus;
+        return this;
+    }
+
+    public AssetServiceStatus getServiceStatus() {
+        return serviceStatus;
     }
 
     @Observable
@@ -92,3 +158,4 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     }
 
 }
+    
