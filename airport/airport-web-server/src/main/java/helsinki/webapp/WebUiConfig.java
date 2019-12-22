@@ -90,12 +90,8 @@ public class WebUiConfig extends AbstractWebUiConfig {
         // Asset table codes
         final AssetClassWebUiConfig assetClassWebUiConfig = AssetClassWebUiConfig.register(injector(), builder);
         final AssetTypeWebUiConfig assetTypeWebUiConfig = AssetTypeWebUiConfig.register(injector(), builder);
-        final AssetTypeOwnershipWebUiConfig assetTypeOwnershipWebUiConfig = AssetTypeOwnershipWebUiConfig.register(injector(), builder);
-        final AssetTypeOperatorWebUiConfig assetTypeOperatorWebUiConfig = AssetTypeOperatorWebUiConfig.register(injector(), builder);
-        
-        //Error Messages 
-        final AssetErrorInteruptionReportWebUiConfig assetErrorInteruptionReportWebUiConfig = AssetErrorInteruptionReportWebUiConfig.register(injector(), builder);
-        
+                
+           
         // Asset
         final AssetWebUiConfig assetWebUiConfig = AssetWebUiConfig.register(injector(), builder);        
         final AssetFinDetWebUiConfig assetFinDetWebUiConfig = AssetFinDetWebUiConfig.register(injector(), builder);
@@ -151,11 +147,7 @@ public class WebUiConfig extends AbstractWebUiConfig {
                 .addMenuItem("Asset Table Codes").description("Various master data for assets.")
                     .addMenuItem(AssetClass.ENTITY_TITLE).description(String.format("%s Centre", AssetClass.ENTITY_TITLE)).centre(assetClassWebUiConfig.centre).done()
                     .addMenuItem(AssetType.ENTITY_TITLE).description(String.format("%s Centre", AssetType.ENTITY_TITLE)).centre(assetTypeWebUiConfig.centre).done()
-                    .addMenuItem(AssetTypeOwnership.ENTITY_TITLE).description(String.format("%s Centre", AssetTypeOwnership.ENTITY_TITLE)).centre(assetTypeOwnershipWebUiConfig.centre).done()
-                    .addMenuItem(AssetTypeOperator.ENTITY_TITLE).description(String.format("%s Centre", AssetTypeOperator.ENTITY_TITLE)).centre(assetTypeOperatorWebUiConfig.centre).done()
-                    .addMenuItem(AssetErrorInteruptionReport.ENTITY_TITLE).description(String.format("%s Centre", AssetErrorInteruptionReport.ENTITY_TITLE)).centre(assetErrorInteruptionReportWebUiConfig.centre).done()
-
-                    .done().
+                                      .done().
             done().done()
         .setLayoutFor(Device.DESKTOP, null, "[[[{\"rowspan\":2}], []], [[]]]")
         .setLayoutFor(Device.TABLET, null,  "[[[{\"rowspan\":2}], []], [[]]]")
