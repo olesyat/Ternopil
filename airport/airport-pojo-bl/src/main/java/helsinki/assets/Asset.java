@@ -59,6 +59,21 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
         return finDet;
     }
 
+    @IsProperty
+    @Title(value = "Service Status", desc = "Service Status of this asset")
+    private AssetServiceStatus serviceStatus;
+
+    @Observable
+    public Asset setName(final AssetServiceStatus serviceStatus) {
+        this.serviceStatus = serviceStatus;
+        return this;
+    }
+
+    public AssetServiceStatus getServiceStatus() {
+        return serviceStatus;
+    }
+
+    
     @Override
     @Observable
     public Asset setDesc(final String desc) {

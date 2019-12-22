@@ -88,9 +88,9 @@ public class PopulateDb extends DomainDrivenDataPopulation {
         setupUser(User.system_users.SU, "helsinki");
         setupPerson(User.system_users.SU, "helsinki");
         
-        final AssetClass as1 = save(new_(AssetClass.class).setName("AC1").setDesc("First description.").setActive(true));
+        final AssetClass as1 = save(new_(AssetClass.class));//.setName("AC1").setDesc("First description."));//.setActive(true));
         save(new_(AssetClass.class).setName("AC2").setActive(true).setDesc("First description."));
-        save(new_(AssetType.class).setName("AT1").setDesc("First description.").setAssetClass(as1).setActive(true));
+        save(new_(AssetType.class).setName("AT1").setDesc("First description.").setAssetClass(as1));//.setActive(true));
         
         final Asset asset1 = save(new_(Asset.class).setDesc("a demo asset 1"));
         final Asset asset2 = save(new_(Asset.class).setDesc("a demo asset 2"));
@@ -110,6 +110,8 @@ public class PopulateDb extends DomainDrivenDataPopulation {
         save(new_(Role.class).setName("R1").setDesc("First role"));
         save(new_(BusinessUnit.class).setName("BU1").setDesc("First business unit"));
         save(new_(Organization.class).setName("ORG1").setDesc("First organization"));
+        
+       
         
         
         LOGGER.info("Completed database creation and population.");
