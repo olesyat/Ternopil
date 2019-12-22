@@ -65,7 +65,6 @@ public class AssetTypeOwnership extends AbstractPersistentEntity<DynamicEntityKe
     @AfterChange(AssetTypeOwnershipExclusivityDefiner.class)
     @Title(value = "Business Unit", desc = "Business unit that owns assets of the specific asset Type")
     private BusinessUnit bu;
-
     
     @IsProperty
     @MapTo
@@ -127,7 +126,5 @@ public class AssetTypeOwnership extends AbstractPersistentEntity<DynamicEntityKe
         return assetType;
     }
 
-    
 
-    
 }
