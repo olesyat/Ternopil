@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 import helsinki.assets.Asset;
 import helsinki.assets.AssetFinDet;
+import helsinki.assets.errors.AssetErrorInteruptionReport;
 import helsinki.config.personnel.PersonWebUiConfig;
 import helsinki.projects.Project;
 import helsinki.tablecodes.asset.AssetClass;
@@ -16,6 +17,7 @@ import helsinki.tablecodes.asset.AssetTypeOwnership;
 import helsinki.webapp.config.assets.AssetFinDetWebUiConfig;
 import helsinki.webapp.config.assets.AssetServiceStatusWebUiConfig;
 import helsinki.webapp.config.assets.AssetWebUiConfig;
+import helsinki.webapp.config.assets.errors.AssetErrorInteruptionReportWebUiConfig;
 import helsinki.webapp.config.projects.ProjectWebUiConfig;
 import helsinki.webapp.config.tablecodes.asset.AssetClassWebUiConfig;
 import helsinki.webapp.config.tablecodes.asset.AssetTypeManagerWebUiConfig;
@@ -90,10 +92,14 @@ public class WebUiConfig extends AbstractWebUiConfig {
         // Asset table codes
         final AssetClassWebUiConfig assetClassWebUiConfig = AssetClassWebUiConfig.register(injector(), builder);
         final AssetTypeWebUiConfig assetTypeWebUiConfig = AssetTypeWebUiConfig.register(injector(), builder);
+
         final AssetTypeOwnershipWebUiConfig assetTypeOwnershipWebUiConfig = AssetTypeOwnershipWebUiConfig.register(injector(), builder);
         final AssetTypeOperatorWebUiConfig assetTypeOperatorWebUiConfig = AssetTypeOperatorWebUiConfig.register(injector(), builder);
         final AssetTypeManagerWebUiConfig assetTypeManagerWebUiConfig = AssetTypeManagerWebUiConfig.register(injector(), builder);
         
+
+                
+           
         // Asset
         final AssetWebUiConfig assetWebUiConfig = AssetWebUiConfig.register(injector(), builder);        
         final AssetFinDetWebUiConfig assetFinDetWebUiConfig = AssetFinDetWebUiConfig.register(injector(), builder);
@@ -149,10 +155,14 @@ public class WebUiConfig extends AbstractWebUiConfig {
                 .addMenuItem("Asset Table Codes").description("Various master data for assets.")
                     .addMenuItem(AssetClass.ENTITY_TITLE).description(String.format("%s Centre", AssetClass.ENTITY_TITLE)).centre(assetClassWebUiConfig.centre).done()
                     .addMenuItem(AssetType.ENTITY_TITLE).description(String.format("%s Centre", AssetType.ENTITY_TITLE)).centre(assetTypeWebUiConfig.centre).done()
+
                     .addMenuItem(AssetTypeOwnership.ENTITY_TITLE).description(String.format("%s Centre", AssetTypeOwnership.ENTITY_TITLE)).centre(assetTypeOwnershipWebUiConfig.centre).done()
                     .addMenuItem(AssetTypeOperator.ENTITY_TITLE).description(String.format("%s Centre", AssetTypeOperator.ENTITY_TITLE)).centre(assetTypeOperatorWebUiConfig.centre).done()
                     .addMenuItem(AssetTypeManager.ENTITY_TITLE).description(String.format("%s Centre", AssetTypeManager.ENTITY_TITLE)).centre(assetTypeManagerWebUiConfig.centre).done()
                     .done().
+
+                                      .done().
+
             done().done()
         .setLayoutFor(Device.DESKTOP, null, "[[[{\"rowspan\":2}], []], [[]]]")
         .setLayoutFor(Device.TABLET, null,  "[[[{\"rowspan\":2}], []], [[]]]")

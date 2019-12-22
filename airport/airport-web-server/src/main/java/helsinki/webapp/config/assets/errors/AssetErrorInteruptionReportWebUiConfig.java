@@ -1,4 +1,4 @@
-package helsinki.webapp.config.assets;
+package helsinki.webapp.config.assets.errors;
 
 import static helsinki.common.StandardScrollingConfigs.standardStandaloneScrollingConfig;
 import static java.lang.String.format;
@@ -9,10 +9,10 @@ import java.util.Optional;
 import com.google.inject.Injector;
 
 import helsinki.assets.Asset;
+import helsinki.assets.errors.AssetErrorInteruptionReport;
 import helsinki.common.LayoutComposer;
 import helsinki.common.StandardActions;
-import helsinki.main.menu.assets.MiAsset;
-import helsinki.tablecodes.service.ServiceStatus;
+import helsinki.main.menu.assets.errors.MiAssetErrorInteruptionReport;
 import ua.com.fielden.platform.web.PrefDim.Unit;
 import ua.com.fielden.platform.web.action.CentreConfigurationWebUiConfig.CentreConfigActions;
 import ua.com.fielden.platform.web.app.config.IWebUiBuilder;
@@ -26,21 +26,21 @@ import ua.com.fielden.platform.web.view.master.api.IMaster;
 import ua.com.fielden.platform.web.view.master.api.actions.MasterActions;
 import ua.com.fielden.platform.web.view.master.api.impl.SimpleMasterBuilder;
 /**
- * {@link Asset} Web UI configuration.
+ * {@link AssetErrorInteruptionReport} Web UI configuration.
  *
  * @author Developers
  *
  */
-public class AssetWebUiConfig {
+public class AssetErrorInteruptionReportWebUiConfig {
 
-    public final EntityCentre<Asset> centre;
-    public final EntityMaster<Asset> master;
+    public final EntityCentre<AssetErrorInteruptionReport> centre;
+    public final EntityMaster<AssetErrorInteruptionReport> master;
 
-    public static AssetWebUiConfig register(final Injector injector, final IWebUiBuilder builder) {
-        return new AssetWebUiConfig(injector, builder);
+    public static AssetErrorInteruptionReportWebUiConfig register(final Injector injector, final IWebUiBuilder builder) {
+        return new AssetErrorInteruptionReportWebUiConfig(injector, builder);
     }
 
-    private AssetWebUiConfig(final Injector injector, final IWebUiBuilder builder) {
+    private AssetErrorInteruptionReportWebUiConfig(final Injector injector, final IWebUiBuilder builder) {
         centre = createCentre(injector, builder);
         builder.register(centre);
         master = createMaster(injector);
@@ -48,82 +48,70 @@ public class AssetWebUiConfig {
     }
 
     /**
-     * Creates entity centre for {@link Asset}.
+     * Creates entity centre for {@link AssetErrorInteruptionReport}.
      *
      * @param injector
      * @return created entity centre
      */
-    private EntityCentre<Asset> createCentre(final Injector injector, final IWebUiBuilder builder) {
-        final String layout = LayoutComposer.mkGridForCentre(4, 5);
+    private EntityCentre<AssetErrorInteruptionReport> createCentre(final Injector injector, final IWebUiBuilder builder) {
+        final String layout = LayoutComposer.mkGridForCentre(2, 2);
 
-        final EntityActionConfig standardNewAction = StandardActions.NEW_ACTION.mkAction(Asset.class);
-        final EntityActionConfig standardDeleteAction = StandardActions.DELETE_ACTION.mkAction(Asset.class);
-        final EntityActionConfig standardExportAction = StandardActions.EXPORT_ACTION.mkAction(Asset.class);
-        final EntityActionConfig standardEditAction = StandardActions.EDIT_ACTION.mkAction(Asset.class);
+        final EntityActionConfig standardNewAction = StandardActions.NEW_ACTION.mkAction(AssetErrorInteruptionReport.class);
+        final EntityActionConfig standardDeleteAction = StandardActions.DELETE_ACTION.mkAction(AssetErrorInteruptionReport.class);
+        final EntityActionConfig standardExportAction = StandardActions.EXPORT_ACTION.mkAction(AssetErrorInteruptionReport.class);
+        final EntityActionConfig standardEditAction = StandardActions.EDIT_ACTION.mkAction(AssetErrorInteruptionReport.class);
         final EntityActionConfig standardSortAction = CentreConfigActions.CUSTOMISE_COLUMNS_ACTION.mkAction();
-        builder.registerOpenMasterAction(Asset.class, standardEditAction);
+        builder.registerOpenMasterAction(AssetErrorInteruptionReport.class, standardEditAction);
 
-        final EntityCentreConfig<Asset> ecc = EntityCentreBuilder.centreFor(Asset.class)
+        final EntityCentreConfig<AssetErrorInteruptionReport> ecc = EntityCentreBuilder.centreFor(AssetErrorInteruptionReport.class)
                 //.runAutomatically()
                 .addFrontAction(standardNewAction)
                 .addTopAction(standardNewAction).also()
                 .addTopAction(standardDeleteAction).also()
                 .addTopAction(standardSortAction).also()
                 .addTopAction(standardExportAction)
-                .addCrit("this").asMulti().autocompleter(Asset.class).also()
-                .addCrit("desc").asMulti().text().also()
-                .addCrit("finDet.initCost").asRange().decimal().also()
-                .addCrit("finDet.acquireDate").asRange().date().also()
-                .addCrit("serviceStatus").asMulti().autocompleter(ServiceStatus.class).also()
+                .addCrit("asset").asMulti().autocompleter(Asset.class).also()
                 .addCrit("regulatory").asMulti().bool().also()
                 .addCrit("keyAsset").asMulti().bool().also()
-                .addCrit("expDays").asRange().integer().also()
-                .addCrit("usageRate").asRange().decimal()
+                .addCrit("message").asSingle().text()
                 .setLayoutFor(Device.DESKTOP, Optional.empty(), layout)
                 .setLayoutFor(Device.TABLET, Optional.empty(), layout)
                 .setLayoutFor(Device.MOBILE, Optional.empty(), layout)
                 .withScrollingConfig(standardStandaloneScrollingConfig(0))
                 .addProp("this").order(1).asc().minWidth(100)
-                    .withSummary("total_count_", "COUNT(SELF)", format("Count:The total number of matching %ss.", Asset.ENTITY_TITLE))
+                    .withSummary("total_count_", "COUNT(SELF)", format("Count:The total number of matching %ss.", AssetErrorInteruptionReport.ENTITY_TITLE))
                     .withAction(standardEditAction).also()
-                .addProp("desc").minWidth(200).also()
-                .addProp("finDet.initCost").width(150).also()
-                .addProp("finDet.acquireDate").width(150)
+                .addProp("desc").minWidth(100)
                 //.addProp("prop").minWidth(100).withActionSupplier(builder.getOpenMasterAction(Entity.class)).also()
                 .addPrimaryAction(standardEditAction)
                 .build();
 
-        return new EntityCentre<>(MiAsset.class, MiAsset.class.getSimpleName(), ecc, injector, null);
+        return new EntityCentre<>(MiAssetErrorInteruptionReport.class, MiAssetErrorInteruptionReport.class.getSimpleName(), ecc, injector, null);
     }
 
     /**
-     * Creates entity master for {@link Asset}.
+     * Creates entity master for {@link AssetErrorInteruptionReport}.
      *
      * @param injector
      * @return created entity master
      */
-    private EntityMaster<Asset> createMaster(final Injector injector) {
-        final String layout = LayoutComposer.mkGridForMasterFitWidth(4, 5);
+    private EntityMaster<AssetErrorInteruptionReport> createMaster(final Injector injector) {
+        final String layout = LayoutComposer.mkGridForMasterFitWidth(2, 2);
 
-        final IMaster<Asset> masterConfig = new SimpleMasterBuilder<Asset>().forEntity(Asset.class)
-                .addProp("number").asSinglelineText().also()
-                .addProp("desc").asMultilineText().also()
-                .addProp("finDet.initCost").asMoney().also()
-                .addProp("finDet.acquireDate").asDatePicker().also()
-                .addProp("serviceStatus").asAutocompleter().also()
+        final IMaster<AssetErrorInteruptionReport> masterConfig = new SimpleMasterBuilder<AssetErrorInteruptionReport>().forEntity(AssetErrorInteruptionReport.class)
+                .addProp("asset").asAutocompleter().also()
                 .addProp("regulatory").asCheckbox().also()
                 .addProp("keyAsset").asCheckbox().also()
-                .addProp("expDays").asDecimal().also()
-                .addProp("usageRate").asDecimal().also()
+                .addProp("message").asSinglelineText().also()
                 .addAction(MasterActions.REFRESH).shortDesc("Cancel").longDesc("Cancel action")
                 .addAction(MasterActions.SAVE)
                 .setActionBarLayoutFor(Device.DESKTOP, Optional.empty(), LayoutComposer.mkActionLayoutForMaster())
                 .setLayoutFor(Device.DESKTOP, Optional.empty(), layout)
                 .setLayoutFor(Device.TABLET, Optional.empty(), layout)
                 .setLayoutFor(Device.MOBILE, Optional.empty(), layout)
-                .withDimensions(mkDim(LayoutComposer.SIMPLE_ONE_COLUMN_MASTER_DIM_WIDTH, 300, Unit.PX))
+                .withDimensions(mkDim(LayoutComposer.SIMPLE_ONE_COLUMN_MASTER_DIM_WIDTH, 480, Unit.PX))
                 .done();
 
-        return new EntityMaster<>(Asset.class, masterConfig, injector);
+        return new EntityMaster<>(AssetErrorInteruptionReport.class, masterConfig, injector);
     }
 }

@@ -21,6 +21,11 @@ import helsinki.organizational.BusinessUnit;
 import helsinki.organizational.Organization;
 import helsinki.tablecodes.asset.AssetTypeOperator;
 import helsinki.assets.AssetServiceStatus;
+import helsinki.reports.ReportKeyAsset;
+import helsinki.reports.ReportKeyAssetLocator;
+import helsinki.asset.reports.AssetErrorReport;
+import helsinki.asset.reports.AssetErrorReportLocator;
+import helsinki.assets.errors.AssetErrorInteruptionReport;
 
 /**
  * A class to register domain entities.
@@ -48,6 +53,11 @@ public class ApplicationDomain implements IApplicationDomainProvider {
         add(Organization.class);
         add(AssetTypeOperator.class);
         add(AssetServiceStatus.class);
+        add(ReportKeyAsset.class);
+        add(ReportKeyAssetLocator.class);
+        add(AssetErrorReport.class);
+        add(AssetErrorReportLocator.class);
+        add(AssetErrorInteruptionReport.class);
     }
 
     private static void add(final Class<? extends AbstractEntity<?>> domainType) {
