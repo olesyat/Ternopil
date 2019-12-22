@@ -1,12 +1,10 @@
 package helsinki.tablecodes.asset;
 
 import java.util.Date;
-
 import helsinki.organizational.BusinessUnit;
 import helsinki.organizational.Organization;
 import helsinki.organizational.Role;
-import helsinki.tablecodes.asset.definers.AssetTypeOwnershipExclusivityDefiner;
-import ua.com.fielden.platform.entity.AbstractPersistentEntity;
+import helsinki.tablecodes.asset.definers.AssetTypeRelatedPersonaExclusivityDefiner;
 import ua.com.fielden.platform.entity.DynamicEntityKey;
 import ua.com.fielden.platform.entity.annotation.CompanionObject;
 import ua.com.fielden.platform.entity.annotation.CompositeKeyMember;
@@ -32,7 +30,7 @@ import ua.com.fielden.platform.utils.Pair;
 @KeyTitle("Key")
 @CompanionObject(IAssetTypeOwnership.class)
 @MapEntityTo
-public class AssetTypeOwnership extends AbstractPersistentEntity<DynamicEntityKey> {
+public class AssetTypeOwnership extends AssetTypeRelatedPersonas {
 
     private static final Pair<String, String> entityTitleAndDesc = TitlesDescsGetter.getEntityTitleAndDesc(AssetTypeOwnership.class);
     public static final String ENTITY_TITLE = entityTitleAndDesc.getKey();
@@ -55,79 +53,60 @@ public class AssetTypeOwnership extends AbstractPersistentEntity<DynamicEntityKe
     
     @IsProperty
     @MapTo
-    @AfterChange(AssetTypeOwnershipExclusivityDefiner.class)
+    @AfterChange(AssetTypeRelatedPersonaExclusivityDefiner.class)
     @Title(value = "Role", desc = "Role that owns assets of the specific asset Type")
     private Role role;
 
     
     @IsProperty
     @MapTo
-    @AfterChange(AssetTypeOwnershipExclusivityDefiner.class)
+    @AfterChange(AssetTypeRelatedPersonaExclusivityDefiner.class)
     @Title(value = "Business Unit", desc = "Business unit that owns assets of the specific asset Type")
     private BusinessUnit bu;
 
     
     @IsProperty
     @MapTo
-    @AfterChange(AssetTypeOwnershipExclusivityDefiner.class)
+    @AfterChange(AssetTypeRelatedPersonaExclusivityDefiner.class)
     @Title(value = "Organization", desc = "Organization that owns assets of the specific asset Type\"")
     private Organization org;
 
 
     @Observable
+    @Override
     public AssetTypeOwnership setDate(final Date date) {
         this.date = date;
         return this;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
     @Observable
+    @Override
     public AssetTypeOwnership setOrg(final Organization org) {
         this.org = org;
         return this;
     }
 
-    public Organization getOrg() {
-        return org;
-    }
 
-   
+    @Override
     @Observable
     public AssetTypeOwnership setBu(final BusinessUnit bu) {
         this.bu = bu;
         return this;
     }
 
-    public BusinessUnit getBu() {
-        return bu;
-    }
-
-    
+    @Override
     @Observable
     public AssetTypeOwnership setRole(final Role role) {
         this.role = role;
         return this;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
     
+    @Override
     @Observable
     public AssetTypeOwnership setAssetType(final AssetType assetType) {
         this.assetType = assetType;
         return this;
     }
 
-    public AssetType getAssetType() {
-        return assetType;
-    }
-
-    
-
-    
 }

@@ -84,6 +84,15 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     public AssetFinDet getFinDet() {
         return finDet;
     }
+
+
+    @IsProperty
+    @Title(value = "Service Status", desc = "Service Status of this asset")
+    private AssetServiceStatus serviceStatus;
+
+    @Observable
+    public Asset setServiceStatus(final AssetServiceStatus serviceStatus) {
+        this.serviceStatus = serviceStatus;
     
     
     public Asset setRegulatory(final Boolean regulatory) {

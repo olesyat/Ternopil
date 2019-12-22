@@ -1,15 +1,15 @@
 package helsinki.tablecodes.asset.definers;
 
-import helsinki.tablecodes.asset.AssetTypeOwnership;
+import helsinki.tablecodes.asset.AssetTypeRelatedPersonas;
 import ua.com.fielden.platform.entity.meta.IAfterChangeEventHandler;
 import ua.com.fielden.platform.entity.meta.MetaProperty;
 
-public class AssetTypeOwnershipExclusivityDefiner implements IAfterChangeEventHandler<Object> {
+public class AssetTypeRelatedPersonaExclusivityDefiner implements IAfterChangeEventHandler<Object> {
 
     @Override
     public void handle(final MetaProperty<Object> prop, final Object value) {
        
-        final AssetTypeOwnership ownership = prop.getEntity();
+        final AssetTypeRelatedPersonas ownership = prop.getEntity();
         
         final boolean allEmpty = ownership.getRole() == null && 
                 ownership.getBu() == null && 
