@@ -2,10 +2,10 @@ package helsinki.assets;
 
 import java.util.Date;
 
+
 import helsinki.tablecodes.service.ServiceStatus;
 import ua.com.fielden.platform.entity.AbstractPersistentEntity;
 import ua.com.fielden.platform.entity.annotation.CompanionObject;
-import ua.com.fielden.platform.entity.annotation.CompositeKeyMember;
 import ua.com.fielden.platform.entity.annotation.DateOnly;
 import ua.com.fielden.platform.entity.annotation.IsProperty;
 import ua.com.fielden.platform.entity.annotation.KeyTitle;
@@ -50,12 +50,12 @@ public class AssetServiceStatus extends AbstractPersistentEntity<String> {
     private Date creationDate;
 
     @Observable
-    public AssetServiceStatus setDate(final Date creationDate) {
+    public AssetServiceStatus setCreationDate(final Date creationDate) {
         this.creationDate = creationDate;
         return this;
     }
 
-    public Date getDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 

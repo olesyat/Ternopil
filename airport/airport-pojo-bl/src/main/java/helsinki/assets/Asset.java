@@ -64,7 +64,7 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     private AssetServiceStatus serviceStatus;
 
     @Observable
-    public Asset setName(final AssetServiceStatus serviceStatus) {
+    public Asset setServiceStatus(final AssetServiceStatus serviceStatus) {
         this.serviceStatus = serviceStatus;
         return this;
     }
