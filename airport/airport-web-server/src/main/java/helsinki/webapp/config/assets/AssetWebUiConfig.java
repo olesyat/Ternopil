@@ -54,7 +54,7 @@ public class AssetWebUiConfig {
      * @return created entity centre
      */
     private EntityCentre<Asset> createCentre(final Injector injector, final IWebUiBuilder builder) {
-        final String layout = LayoutComposer.mkGridForCentre(4, 4);
+        final String layout = LayoutComposer.mkGridForCentre(4, 5);
 
         final EntityActionConfig standardNewAction = StandardActions.NEW_ACTION.mkAction(Asset.class);
         final EntityActionConfig standardDeleteAction = StandardActions.DELETE_ACTION.mkAction(Asset.class);
@@ -77,7 +77,8 @@ public class AssetWebUiConfig {
                 .addCrit("serviceStatus").asMulti().autocompleter(ServiceStatus.class).also()
                 .addCrit("regulatory").asMulti().bool().also()
                 .addCrit("keyAsset").asMulti().bool().also()
-                .addCrit("expDays").asRange().integer()
+                .addCrit("expDays").asRange().integer().also()
+                .addCrit("usageRate").asRange().decimal()
                 .setLayoutFor(Device.DESKTOP, Optional.empty(), layout)
                 .setLayoutFor(Device.TABLET, Optional.empty(), layout)
                 .setLayoutFor(Device.MOBILE, Optional.empty(), layout)
@@ -102,7 +103,7 @@ public class AssetWebUiConfig {
      * @return created entity master
      */
     private EntityMaster<Asset> createMaster(final Injector injector) {
-        final String layout = LayoutComposer.mkGridForMasterFitWidth(4, 4);
+        final String layout = LayoutComposer.mkGridForMasterFitWidth(4, 5);
 
         final IMaster<Asset> masterConfig = new SimpleMasterBuilder<Asset>().forEntity(Asset.class)
                 .addProp("number").asSinglelineText().also()
@@ -113,6 +114,7 @@ public class AssetWebUiConfig {
                 .addProp("regulatory").asCheckbox().also()
                 .addProp("keyAsset").asCheckbox().also()
                 .addProp("expDays").asDecimal().also()
+                .addProp("usageRate").asDecimal().also()
                 .addAction(MasterActions.REFRESH).shortDesc("Cancel").longDesc("Cancel action")
                 .addAction(MasterActions.SAVE)
                 .setActionBarLayoutFor(Device.DESKTOP, Optional.empty(), LayoutComposer.mkActionLayoutForMaster())

@@ -130,6 +130,18 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     }
     
     
+    @IsProperty
+    @MapTo
+    @Title(value = "Usage rate", desc = "Desc")
+    private float usageRate;
+
+    public float getName() {
+        return this.getUsageRate();
+    }
+
+    
+
+    
     @Override
     @Observable
     public Asset setDesc(final String desc) {
