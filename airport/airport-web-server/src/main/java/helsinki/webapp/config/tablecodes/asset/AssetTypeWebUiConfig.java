@@ -95,9 +95,7 @@ public class AssetTypeWebUiConfig {
                     .withActionSupplier(builder.getOpenMasterAction(AssetClass.class)).also()
                 .addProp("active").width(100).also()
                 .addProp("currentOwnership.role").width(100).also()
-
                 .addProp("currentOwnership.org").width(100).also()
-
                 .addProp("currentOwnership.bu").width(100).also()
                 .addProp("currentOwnership.startDate").width(100)
 
