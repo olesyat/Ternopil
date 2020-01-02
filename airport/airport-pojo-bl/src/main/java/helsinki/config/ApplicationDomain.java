@@ -26,7 +26,7 @@ import helsinki.assets.errors.AssetErrorInteruptionReport;
 /**
  * A class to register domain entities.
  * 
- * @author TG Team
+ * @author Developers
  * 
  */
 public class ApplicationDomain implements IApplicationDomainProvider {

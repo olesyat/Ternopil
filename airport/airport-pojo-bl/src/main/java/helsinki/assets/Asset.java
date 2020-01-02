@@ -47,18 +47,23 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     private boolean regulatory;
 
     
-    @IsProperty
-    @MapTo
-    @Title(value = "Key Asset", desc = "Indication of whether this asset is key asset")
-    private boolean keyAsset;
     
+
         
     @IsProperty
     @MapTo
     @Title(value = "Number", desc = "A unique asset number, auto-generated.")
     @CompositeKeyMember(1)
     @Readonly
-    private String number;
+    private String number;    
+
+    
+    
+    @IsProperty
+    @MapTo
+    @Title(value = "Key Asset", desc = "Indication of whether this asset is key asset")
+    private boolean keyAsset;
+
     
     @IsProperty
     @Title(value = "Fin Det", desc = "Financial details for this asset")
@@ -68,7 +73,6 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     @Title(value = "Days to expiration", desc = "Hom many days we can use that Asset")
     private int expDays;
 
-    
     
     @Observable
     protected Asset setFinDet(final AssetFinDet finDet) {
@@ -87,7 +91,7 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
 
     
     
-    public Asset setRegulatory(final Boolean regulatory) {
+    public Asset setRegulatory(final boolean regulatory) {
         this.regulatory = regulatory;
         return this;
     }
@@ -96,12 +100,12 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
         return regulatory;
     }
     
-    public Asset setKeyAsset(final Boolean keyAsset) {
+    public Asset setKeyAsset(final boolean keyAsset) {
         this.keyAsset = keyAsset;
-        return this;
+        return this; 
     }
     
-    public Boolean getKeyAsset() {
+    public boolean getKeyAsset() {
         return keyAsset;
     }
     
@@ -123,7 +127,7 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     }
     
     
-    public float getUsageRate() {
+    public float calcUsageRate() {
      float expDays = getNumberOfExpirationDays();
      float sumActiveDays = getActiveDays();
      
@@ -131,17 +135,24 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     }
     
     
-    @IsProperty
-    @MapTo
-    @Title(value = "Usage rate", desc = "Desc")
-    private float usageRate;
+    
 
-    public float getName() {
-        return this.getUsageRate();
-    }
 
     
 
+    
+    @IsProperty
+    @Title(value = "Usage rate", desc = "Desc")
+    private float usageRate;
+
+    public float getUsageRate() {
+        return this.calcUsageRate();
+    }
+
+    public Asset setUsageRate() {
+        this.usageRate = this.calcUsageRate();
+        return this;
+    }
     
     @Override
     @Observable
@@ -157,7 +168,7 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     }
 
     public AssetServiceStatus getServiceStatus() {
-        return serviceStatus;
+        return this.serviceStatus;
     }
 
     @Observable
@@ -167,7 +178,7 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     }
 
     public String getNumber() {
-        return number;
+        return this.number;
     }
 
 }

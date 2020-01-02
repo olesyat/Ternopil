@@ -51,12 +51,12 @@ public class AssetErrorInteruptionReport extends AbstractPersistentEntity<String
         private String message;
 
         @Observable
-        public AssetErrorInteruptionReport setErrorMessage(final String message) {
+        public AssetErrorInteruptionReport setMessage(final String message) {
             this.message = message;
             return this;
         }
 
-        public String getErrorMessage() {
+        public String getMessage() {
             return message;
         }
 
