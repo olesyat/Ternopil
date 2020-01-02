@@ -36,6 +36,8 @@ import ua.com.fielden.platform.entity.annotation.MapTo;
 import ua.com.fielden.platform.entity.annotation.Observable;
 import ua.com.fielden.platform.entity.annotation.Readonly;
 import ua.com.fielden.platform.entity.annotation.Title;
+import ua.com.fielden.platform.entity.annotation.titles.PathTitle;
+import ua.com.fielden.platform.entity.annotation.titles.Subtitles;
 import ua.com.fielden.platform.entity.query.EntityAggregates;
 import ua.com.fielden.platform.entity.query.fluent.fetch;
 import ua.com.fielden.platform.entity.query.model.AggregatedResultQueryModel;
@@ -83,6 +85,11 @@ public class AssetType extends ActivatableAbstractEntity<DynamicEntityKey> {
     @Readonly
     @Calculated
     @Title(value = "Current ownership", desc = "Desc")
+    @Subtitles({@PathTitle(path="role", title="Ownership Role"), 
+                @PathTitle(path="bu", title="Ownership Business Unit"),
+                @PathTitle(path="org", title="Ownership Org"),
+                @PathTitle(path="startDate", title="Ownership Start Date"),
+                })
     private AssetTypeOwnership currentOwnership;
     
     private static final EntityResultQueryModel<AssetTypeOwnership> subQuery = 
