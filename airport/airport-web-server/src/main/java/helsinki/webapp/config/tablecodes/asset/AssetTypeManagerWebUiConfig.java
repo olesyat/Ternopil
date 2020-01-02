@@ -78,7 +78,7 @@ public class AssetTypeManagerWebUiConfig {
                 .addCrit("startDate").asRange().date().also()
                 .addCrit("role").asMulti().autocompleter(Role.class).also()
                 .addCrit("bu").asMulti().autocompleter(BusinessUnit.class).also()
-                .addCrit("org").asMulti().autocompleter(Organization.class).also()
+                .addCrit("org").asMulti().autocompleter(Organization.class)
                 .setLayoutFor(Device.DESKTOP, Optional.empty(), layout)
                 .setLayoutFor(Device.TABLET, Optional.empty(), layout)
                 .setLayoutFor(Device.MOBILE, Optional.empty(), layout)

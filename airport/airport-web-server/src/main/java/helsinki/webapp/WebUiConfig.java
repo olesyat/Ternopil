@@ -159,11 +159,7 @@ public class WebUiConfig extends AbstractWebUiConfig {
                     .addMenuItem(AssetTypeOwnership.ENTITY_TITLE).description(String.format("%s Centre", AssetTypeOwnership.ENTITY_TITLE)).centre(assetTypeOwnershipWebUiConfig.centre).done()
                     .addMenuItem(AssetTypeOperator.ENTITY_TITLE).description(String.format("%s Centre", AssetTypeOperator.ENTITY_TITLE)).centre(assetTypeOperatorWebUiConfig.centre).done()
                     .addMenuItem(AssetTypeManager.ENTITY_TITLE).description(String.format("%s Centre", AssetTypeManager.ENTITY_TITLE)).centre(assetTypeManagerWebUiConfig.centre).done()
-                    .done().
-
-                                      .done().
-
-            done().done()
+                    .done().done().done()
         .setLayoutFor(Device.DESKTOP, null, "[[[{\"rowspan\":2}], []], [[]]]")
         .setLayoutFor(Device.TABLET, null,  "[[[{\"rowspan\":2}], []], [[]]]")
         .setLayoutFor(Device.MOBILE, null, "[[[]],[[]], [[]]]")

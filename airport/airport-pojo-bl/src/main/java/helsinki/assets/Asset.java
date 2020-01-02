@@ -69,11 +69,6 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     private int expDays;
 
     
-
-    @IsProperty
-    @Title(value = "Service Status", desc = "Service Status of this asset")
-    private AssetServiceStatus serviceStatus;
-
     
     @Observable
     protected Asset setFinDet(final AssetFinDet finDet) {
@@ -90,9 +85,6 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     @Title(value = "Service Status", desc = "Service Status of this asset")
     private AssetServiceStatus serviceStatus;
 
-    @Observable
-    public Asset setServiceStatus(final AssetServiceStatus serviceStatus) {
-        this.serviceStatus = serviceStatus;
     
     
     public Asset setRegulatory(final Boolean regulatory) {
