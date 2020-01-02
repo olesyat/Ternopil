@@ -2,7 +2,7 @@ package helsinki.main.menu.asset.tablecodes;
 
 import ua.com.fielden.platform.entity.annotation.EntityType;
 import ua.com.fielden.platform.ui.menu.MiWithConfigurationSupport;
-import helsinki.asset.tablecodes.AssetClass;
+import helsinki.tablecodes.asset.AssetClass;
 /**
  * Main menu item representing an entity centre for {@link AssetClass}.
  *

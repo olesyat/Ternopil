@@ -87,10 +87,12 @@ public class AssetType extends ActivatableAbstractEntity<DynamicEntityKey> {
     
     private static final EntityResultQueryModel<AssetTypeOwnership> subQuery = 
             select(AssetTypeOwnership.class).where().prop("assetType").eq().extProp("assetType")
+            .and().prop("startDate").le().now()
             .and().prop("startDate").gt().extProp("startDate").model();
 
     protected static final ExpressionModel currentOwnership_ = expr().model(select(AssetTypeOwnership.class)
             .where().prop("assetType").eq().extProp("id")
+            .and().prop("startDate").le().now()
             .and().notExists(subQuery).model()).
             model();
             

@@ -14,9 +14,7 @@ import ua.com.fielden.platform.dao.IEntityDao;
 public interface IAssetTypeManager extends IEntityDao<AssetTypeManager> {
 
     static final IFetchProvider<AssetTypeManager> FETCH_PROVIDER = EntityUtils.fetch(AssetTypeManager.class).with(
-        // TODO: uncomment the following line and specify the properties, which are required for the UI. Then remove the line after.
-        // "key", "desc");
-        "Please specify the properties, which are required for the UI");
+        "assetType", "date", "role", "bu", "org");
 
 }
 

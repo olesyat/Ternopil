@@ -1,6 +1,6 @@
 package helsinki.tablecodes.service;
 
-import helsinki.asset.tablecodes.AssetClass;
+import helsinki.tablecodes.asset.AssetClass;
 import helsinki.tablecodes.asset.AssetType;
 import ua.com.fielden.platform.entity.AbstractPersistentEntity;
 import ua.com.fielden.platform.entity.annotation.DescTitle;

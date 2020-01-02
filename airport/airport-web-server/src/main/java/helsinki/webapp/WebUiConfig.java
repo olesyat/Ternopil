@@ -6,7 +6,6 @@ import org.apache.commons.lang.StringUtils;
 
 import helsinki.assets.Asset;
 import helsinki.assets.AssetFinDet;
-import helsinki.assets.errors.AssetErrorInteruptionReport;
 import helsinki.config.personnel.PersonWebUiConfig;
 import helsinki.projects.Project;
 import helsinki.tablecodes.asset.AssetClass;
@@ -17,7 +16,6 @@ import helsinki.tablecodes.asset.AssetTypeOwnership;
 import helsinki.webapp.config.assets.AssetFinDetWebUiConfig;
 import helsinki.webapp.config.assets.AssetServiceStatusWebUiConfig;
 import helsinki.webapp.config.assets.AssetWebUiConfig;
-import helsinki.webapp.config.assets.errors.AssetErrorInteruptionReportWebUiConfig;
 import helsinki.webapp.config.projects.ProjectWebUiConfig;
 import helsinki.webapp.config.tablecodes.asset.AssetClassWebUiConfig;
 import helsinki.webapp.config.tablecodes.asset.AssetTypeManagerWebUiConfig;
