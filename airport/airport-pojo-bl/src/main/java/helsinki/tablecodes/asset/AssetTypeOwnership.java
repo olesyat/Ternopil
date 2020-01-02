@@ -108,5 +108,9 @@ public class AssetTypeOwnership extends AssetTypeRelatedPersonas {
         this.assetType = assetType;
         return this;
     }
+    
+    public AssetType getAssetType() {
+        return this.assetType;
+    }
 
 }

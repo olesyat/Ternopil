@@ -5,14 +5,14 @@ import ua.com.fielden.platform.utils.EntityUtils;
 import ua.com.fielden.platform.dao.IEntityDao;
 
 /**
- * Companion object for entity {@link AssetClass}.
+ * Companion object for entity {@link AssetType}.
  *
  * @author Developers
  *
  */
-public interface IAssetType extends IEntityDao<AssetClass> {
+public interface IAssetType extends IEntityDao<AssetType> {
 
-    static final IFetchProvider<AssetClass> FETCH_PROVIDER = EntityUtils.fetch(AssetClass.class)
+    static final IFetchProvider<AssetType> FETCH_PROVIDER = EntityUtils.fetch(AssetType.class)
             
        .with("name", "desc", "assetClass", "currentOwnership.role", "currentOwnership.role", 
                "currentOwnership.bu", "currentOwnership.startDate");
