@@ -5,28 +5,23 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import helsinki.assets.Asset;
-import helsinki.assets.AssetFinDet;
-import helsinki.assets.AssetServiceStatus;
-import helsinki.organizational.BusinessUnit;
-import helsinki.organizational.Organization;
-import helsinki.organizational.Role;
-import helsinki.personnel.Person;
-import helsinki.projects.Project;
 import helsinki.tablecodes.asset.AssetClass;
-import helsinki.tablecodes.asset.AssetType;
-import helsinki.tablecodes.asset.AssetTypeManager;
-import helsinki.tablecodes.asset.AssetTypeOperator;
-import helsinki.tablecodes.asset.AssetTypeOwnership;
-import helsinki.tablecodes.asset.master.menu.actions.AssetClassMaster_OpenAssetType_MenuItem;
-import helsinki.tablecodes.asset.master.menu.actions.AssetClassMaster_OpenMain_MenuItem;
-import helsinki.tablecodes.asset.ui_actions.OpenAssetClassMasterAction;
-import helsinki.tablecodes.service.ConditionRating;
-import helsinki.tablecodes.service.ServiceStatus;
+import helsinki.personnel.Person;
 import ua.com.fielden.platform.basic.config.IApplicationDomainProvider;
 import ua.com.fielden.platform.domain.PlatformDomainTypes;
 import ua.com.fielden.platform.entity.AbstractEntity;
+import helsinki.assets.Asset;
+import helsinki.tablecodes.asset.ui_actions.OpenAssetClassMasterAction;
+import helsinki.tablecodes.asset.master.menu.actions.AssetClassMaster_OpenMain_MenuItem;
+import helsinki.tablecodes.asset.master.menu.actions.AssetClassMaster_OpenAssetType_MenuItem;
+import helsinki.assets.AssetFinDet;
+import helsinki.organizational.Role;
+import helsinki.projects.Project;
+import helsinki.organizational.BusinessUnit;
+import helsinki.organizational.Organization;
+import helsinki.tablecodes.asset.AssetTypeOperator;
+import helsinki.assets.AssetServiceStatus;
+import helsinki.assets.errors.AssetErrorInteruptionReport;
 
 /**
  * A class to register domain entities.
@@ -42,27 +37,20 @@ public class ApplicationDomain implements IApplicationDomainProvider {
         entityTypes.addAll(PlatformDomainTypes.types);
         add(Person.class);
         add(AssetClass.class);
-        add(AssetType.class);
-        add(ServiceStatus.class);
+        add(AssetClass.class);
         add(Asset.class);
         add(OpenAssetClassMasterAction.class);
         add(AssetClassMaster_OpenMain_MenuItem.class);
         add(AssetClassMaster_OpenAssetType_MenuItem.class);
-        add(Project.class);
-        add(AssetServiceStatus.class);
-        add(ConditionRating.class);
         add(AssetFinDet.class);
         add(Role.class);
+        add(Project.class);
         add(BusinessUnit.class);
         add(Organization.class);
-        add(AssetTypeOwnership.class);
-        //add(AssetOwnership.class);
-        add(AssetTypeManager.class);
-        //add(AssetTypeOperator.class);
-        //Asset Manager 
-        add(ServiceStatus.class);
-        add(ConditionRating.class);
-        //add(AssetTypeOwnership.class);
+        add(AssetTypeOperator.class);
+        add(AssetServiceStatus.class);
+
+        add(AssetErrorInteruptionReport.class);
     }
 
     private static void add(final Class<? extends AbstractEntity<?>> domainType) {
