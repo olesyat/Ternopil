@@ -1,21 +1,23 @@
 package helsinki.assets;
 
-import ua.com.fielden.platform.entity.AbstractEntity;
+import java.math.BigDecimal;
+
+import helsinki.tablecodes.service.ServiceStatus;
 import ua.com.fielden.platform.entity.ActivatableAbstractEntity;
 import ua.com.fielden.platform.entity.DynamicEntityKey;
-import ua.com.fielden.platform.entity.annotation.KeyType;
-import ua.com.fielden.platform.entity.annotation.KeyTitle;
 import ua.com.fielden.platform.entity.annotation.CompanionObject;
 import ua.com.fielden.platform.entity.annotation.CompositeKeyMember;
+import ua.com.fielden.platform.entity.annotation.DescRequired;
+import ua.com.fielden.platform.entity.annotation.DescTitle;
+import ua.com.fielden.platform.entity.annotation.DisplayDescription;
+import ua.com.fielden.platform.entity.annotation.IsProperty;
+import ua.com.fielden.platform.entity.annotation.KeyTitle;
+import ua.com.fielden.platform.entity.annotation.KeyType;
 import ua.com.fielden.platform.entity.annotation.MapEntityTo;
 import ua.com.fielden.platform.entity.annotation.MapTo;
 import ua.com.fielden.platform.entity.annotation.Observable;
 import ua.com.fielden.platform.entity.annotation.Readonly;
 import ua.com.fielden.platform.entity.annotation.Title;
-import ua.com.fielden.platform.entity.annotation.DescTitle;
-import ua.com.fielden.platform.entity.annotation.DisplayDescription;
-import ua.com.fielden.platform.entity.annotation.IsProperty;
-import ua.com.fielden.platform.entity.annotation.DescRequired;
 import ua.com.fielden.platform.reflection.TitlesDescsGetter;
 import ua.com.fielden.platform.utils.Pair;
 
@@ -71,7 +73,7 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     
     @IsProperty
     @Title(value = "Days to expiration", desc = "Hom many days we can use that Asset")
-    private int expDays;
+    private Integer expDays;
 
     
     @Observable
@@ -87,10 +89,11 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
 
     @IsProperty
     @Title(value = "Service Status", desc = "Service Status of this asset")
-    private AssetServiceStatus serviceStatus;
+    private ServiceStatus serviceStatus;
 
     
     
+    @Observable
     public Asset setRegulatory(final boolean regulatory) {
         this.regulatory = regulatory;
         return this;
@@ -100,6 +103,7 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
         return regulatory;
     }
     
+    @Observable
     public Asset setKeyAsset(final boolean keyAsset) {
         this.keyAsset = keyAsset;
         return this; 
@@ -109,12 +113,14 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
         return keyAsset;
     }
     
-    public Asset setNumberOfExpirationDays(final int expDays) {
+    @Observable
+
+    public Asset setExpDays(final Integer expDays) {
      this.expDays = expDays;
      return this;
     }
     
-    public int getNumberOfExpirationDays() {
+    public Integer getExpDays() {
      return expDays;
     }
     
@@ -127,11 +133,11 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     }
     
     
-    public float calcUsageRate() {
-     float expDays = getNumberOfExpirationDays();
-     float sumActiveDays = getActiveDays();
+    public BigDecimal calcUsageRate() {
+     Integer expDays = this.getExpDays();
+     Integer sumActiveDays = this.getActiveDays();
      
-     return sumActiveDays / expDays;
+     return BigDecimal.valueOf(sumActiveDays / expDays);
     }
     
     
@@ -143,9 +149,9 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     
     @IsProperty
     @Title(value = "Usage rate", desc = "Desc")
-    private float usageRate;
+    private BigDecimal usageRate;
 
-    public float getUsageRate() {
+    public BigDecimal getUsageRate() {
         return this.calcUsageRate();
     }
 
@@ -162,12 +168,12 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     }
     
     @Observable
-    public Asset setServiceStatus(final AssetServiceStatus serviceStatus) {
+    public Asset setServiceStatus(final ServiceStatus serviceStatus) {
         this.serviceStatus = serviceStatus;
         return this;
     }
 
-    public AssetServiceStatus getServiceStatus() {
+    public ServiceStatus getServiceStatus() {
         return this.serviceStatus;
     }
 

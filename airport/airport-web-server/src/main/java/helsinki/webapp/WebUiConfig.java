@@ -42,7 +42,7 @@ public class WebUiConfig extends AbstractWebUiConfig {
     private final int port;
 
     public WebUiConfig(final String domainName, final int port, final Workflows workflow, final String path) {
-        super("Helsinki Airport Asset Management (development)", workflow, new String[] { "helsinki/" });
+        super("Ternopil Airport Asset Management (development)", workflow, new String[] { "ternopil/" });
         if (StringUtils.isEmpty(domainName) || StringUtils.isEmpty(path)) {
             throw new IllegalArgumentException("Both the domain name and application binding path should be specified.");
         }
@@ -101,7 +101,7 @@ public class WebUiConfig extends AbstractWebUiConfig {
         // Asset
         final AssetWebUiConfig assetWebUiConfig = AssetWebUiConfig.register(injector(), builder);        
         final AssetFinDetWebUiConfig assetFinDetWebUiConfig = AssetFinDetWebUiConfig.register(injector(), builder);
-        final AssetServiceStatusWebUiConfig assetServiceStatusWebUiConfig = AssetServiceStatusWebUiConfig.register(injector(), builder);
+        //final AssetServiceStatusWebUiConfig assetServiceStatusWebUiConfig = AssetServiceStatusWebUiConfig.register(injector(), builder);
 
         
         //Project related UI 
