@@ -22,6 +22,8 @@ import helsinki.personnel.Person;
 import helsinki.projects.Project;
 import helsinki.tablecodes.asset.AssetClass;
 import helsinki.tablecodes.asset.AssetType;
+import helsinki.tablecodes.service.ServiceStatus;
+import ua.com.fielden.platform.dao.IEntityDao;
 import ua.com.fielden.platform.devdb_support.DomainDrivenDataPopulation;
 import ua.com.fielden.platform.entity.AbstractEntity;
 import ua.com.fielden.platform.persistence.HibernateUtil;
@@ -40,7 +42,7 @@ import ua.com.fielden.platform.utils.DbUtils;
  * 
  * <p>
  * 
- * @author Ternopil Team
+ * @author TG Team
  * 
  */
 public class PopulateDb extends DomainDrivenDataPopulation {
@@ -88,9 +90,9 @@ public class PopulateDb extends DomainDrivenDataPopulation {
         setupUser(User.system_users.SU, "helsinki");
         setupPerson(User.system_users.SU, "helsinki");
         
-        final AssetClass as1 = save(new_(AssetClass.class));//.setName("AC1").setDesc("First description."));//.setActive(true));
-        save(new_(AssetClass.class).setName("AC2").setActive(true).setDesc("First description."));
-        save(new_(AssetType.class).setName("AT1").setDesc("First description.").setAssetClass(as1));//.setActive(true));
+        final AssetClass as1 = save(new_(AssetClass.class).setName("AC1").setDesc("First description.").setActive(true));
+        save(new_(AssetClass.class).setName("AC2").setDesc("First description."));
+        save(new_(AssetType.class).setName("AT1").setDesc("First description.").setAssetClass(as1));
         
         final Asset asset1 = save(new_(Asset.class).setDesc("a demo asset 1"));
         final Asset asset2 = save(new_(Asset.class).setDesc("a demo asset 2"));
@@ -106,14 +108,6 @@ public class PopulateDb extends DomainDrivenDataPopulation {
         save(new_(Project.class).setName("PROJECT 1").setStartDate(date("2019-12-08 00:00:00")).setDesc("Project 1 description"));
         save(new_(Project.class).setName("PROJECT 2").setStartDate(date("2020-01-02 00:00:00")).setDesc("Project 2 description"));
 
-        
-        save(new_(Role.class).setName("R1").setDesc("First role"));
-        save(new_(BusinessUnit.class).setName("BU1").setDesc("First business unit"));
-        save(new_(Organization.class).setName("ORG1").setDesc("First organization"));
-        
-       
-        
-        
         LOGGER.info("Completed database creation and population.");
     }
 
@@ -126,9 +120,5 @@ public class PopulateDb extends DomainDrivenDataPopulation {
     protected List<Class<? extends AbstractEntity<?>>> domainEntityTypes() {
         return applicationDomainProvider.entityTypes();
     }
-    
-    
-
-
 
 }

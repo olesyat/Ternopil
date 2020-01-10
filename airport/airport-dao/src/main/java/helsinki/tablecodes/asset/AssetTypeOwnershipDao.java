@@ -20,19 +20,10 @@ public class AssetTypeOwnershipDao extends CommonEntityDao<AssetTypeOwnership> i
         super(filter);
     }
 
-    
-    @Override
-        public AssetTypeOwnership new_() {
-            final AssetTypeOwnership ownership = super.new_();
-            ownership.getProperty("role").setRequired(true);
-            ownership.getProperty("bu").setRequired(true);
-            ownership.getProperty("org").setRequired(true);
-            
-            return ownership; 
-        }
-    
     @Override
     protected IFetchProvider<AssetTypeOwnership> createFetchProvider() {
-        return FETCH_PROVIDER;
-        }
+        // TODO: uncomment the following line and specify the properties, which are required for the UI in IAssetTypeOwnership.FETCH_PROVIDER. Then remove the line after.
+        // return FETCH_PROVIDER;
+        throw new UnsupportedOperationException("Please specify the properties, which are required for the UI in IAssetTypeOwnership.FETCH_PROVIDER");
+    }
 }
