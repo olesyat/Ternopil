@@ -1,0 +1,18 @@
+package helsinki.tablecodes.asset;
+
+import ua.com.fielden.platform.entity.fetch.IFetchProvider;
+import ua.com.fielden.platform.utils.EntityUtils;
+import ua.com.fielden.platform.dao.IEntityDao;
+
+/**
+ * Companion object for entity {@link AssetOperator}.
+ *
+ * @author Developers
+ *
+ */
+public interface IAssetOperator extends IEntityDao<AssetOperator> {
+
+	static final IFetchProvider<AssetOperatorship> FETCH_PROVIDER = EntityUtils.fetch(AssetOperatorship.class)
+            .with("asset", "role", "bu", "org", "startDate");
+
+}

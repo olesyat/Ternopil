@@ -1,0 +1,5 @@
+package helsinki.tablecodes.asset.definers;
+
+public class AssetTypeOwnershipExclusivityDefiner {
+
+}
