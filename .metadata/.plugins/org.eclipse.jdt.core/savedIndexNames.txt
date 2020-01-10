@@ -7,11 +7,9 @@ INDEX VERSION 1.131+/home/dariia/eclipse-workspace/Ternopil/.metadata/.plugins/o
 3627472550.index
 1463406544.index
 3708813921.index
-1574503741.index
 1648967837.index
 1839698829.index
 2209759844.index
-1150063503.index
 2297288244.index
 2524386308.index
 2587287262.index
@@ -19,7 +17,6 @@ INDEX VERSION 1.131+/home/dariia/eclipse-workspace/Ternopil/.metadata/.plugins/o
 352503385.index
 3608969379.index
 3118574940.index
-708392886.index
 8151109.index
 2320889943.index
 1554227961.index
@@ -73,7 +70,6 @@ INDEX VERSION 1.131+/home/dariia/eclipse-workspace/Ternopil/.metadata/.plugins/o
 987274253.index
 1039055676.index
 431880599.index
-1425439390.index
 2443875429.index
 2128856458.index
 3853667254.index
