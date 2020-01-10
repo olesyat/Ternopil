@@ -1,0 +1,191 @@
+package helsinki.assets;
+
+import java.math.BigDecimal;
+
+import helsinki.tablecodes.service.ServiceStatus;
+import ua.com.fielden.platform.entity.ActivatableAbstractEntity;
+import ua.com.fielden.platform.entity.DynamicEntityKey;
+import ua.com.fielden.platform.entity.annotation.CompanionObject;
+import ua.com.fielden.platform.entity.annotation.CompositeKeyMember;
+import ua.com.fielden.platform.entity.annotation.DescRequired;
+import ua.com.fielden.platform.entity.annotation.DescTitle;
+import ua.com.fielden.platform.entity.annotation.DisplayDescription;
+import ua.com.fielden.platform.entity.annotation.IsProperty;
+import ua.com.fielden.platform.entity.annotation.KeyTitle;
+import ua.com.fielden.platform.entity.annotation.KeyType;
+import ua.com.fielden.platform.entity.annotation.MapEntityTo;
+import ua.com.fielden.platform.entity.annotation.MapTo;
+import ua.com.fielden.platform.entity.annotation.Observable;
+import ua.com.fielden.platform.entity.annotation.Readonly;
+import ua.com.fielden.platform.entity.annotation.Title;
+import ua.com.fielden.platform.reflection.TitlesDescsGetter;
+import ua.com.fielden.platform.utils.Pair;
+
+/**
+ * Master entity object.
+ *
+ * @author Developers
+ *
+ */
+@KeyType(DynamicEntityKey.class)
+@KeyTitle("Asset Number")
+@CompanionObject(IAsset.class)
+@MapEntityTo
+@DescTitle("Description")
+@DisplayDescription
+@DescRequired
+public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
+
+    private static final Pair<String, String> entityTitleAndDesc = TitlesDescsGetter.getEntityTitleAndDesc(Asset.class);
+    public static final String ENTITY_TITLE = entityTitleAndDesc.getKey();
+    public static final String ENTITY_DESC = entityTitleAndDesc.getValue();
+// We assume that each concrete Asset has a possibility to report about its problem. 
+//  However, we can implement Regulatory attribute as an user input while creating an Asset object.
+    
+    
+    @IsProperty
+    @MapTo
+    @Title(value = "Regulatory", desc = "Indication of whether this asset is regulatory")
+    private boolean regulatory;
+
+    
+    
+
+        
+    @IsProperty
+    @MapTo
+    @Title(value = "Number", desc = "A unique asset number, auto-generated.")
+    @CompositeKeyMember(1)
+    @Readonly
+    private String number;    
+
+    
+    
+    @IsProperty
+    @MapTo
+    @Title(value = "Key Asset", desc = "Indication of whether this asset is key asset")
+    private boolean keyAsset;
+
+    
+    @IsProperty
+    @Title(value = "Fin Det", desc = "Financial details for this asset")
+    private AssetFinDet finDet;
+    
+    @IsProperty
+    @Title(value = "Days to expiration", desc = "Hom many days we can use that Asset")
+    private Integer expDays;
+
+    
+    @Observable
+    protected Asset setFinDet(final AssetFinDet finDet) {
+        this.finDet = finDet;
+        return this;
+    }
+
+    public AssetFinDet getFinDet() {
+        return finDet;
+    }
+
+
+    @IsProperty
+    @Title(value = "Service Status", desc = "Service Status of this asset")
+    private ServiceStatus serviceStatus;
+
+    
+    
+    @Observable
+    public Asset setRegulatory(final boolean regulatory) {
+        this.regulatory = regulatory;
+        return this;
+    }
+    
+    public Boolean getRegulatory() {
+        return regulatory;
+    }
+    
+    @Observable
+    public Asset setKeyAsset(final boolean keyAsset) {
+        this.keyAsset = keyAsset;
+        return this; 
+    }
+    
+    public boolean getKeyAsset() {
+        return keyAsset;
+    }
+    
+    @Observable
+
+    public Asset setExpDays(final Integer expDays) {
+     this.expDays = expDays;
+     return this;
+    }
+    
+    public Integer getExpDays() {
+     return expDays;
+    }
+    
+    public int getActiveDays() {
+     // this function returns number of active days of Asset from DataBase
+     // in the future we can implement it
+     // int activeDays = returnActiveFromDb
+     int activeDays = 10; //hardcoded
+     return activeDays;
+    }
+    
+    
+    public BigDecimal calcUsageRate() {
+     Integer expDays = this.getExpDays();
+     Integer sumActiveDays = this.getActiveDays();
+     
+     return BigDecimal.valueOf(sumActiveDays / expDays);
+    }
+    
+    
+    
+
+
+    
+
+    
+    @IsProperty
+    @Title(value = "Usage rate", desc = "Desc")
+    private BigDecimal usageRate;
+
+    public BigDecimal getUsageRate() {
+        return this.calcUsageRate();
+    }
+
+    public Asset setUsageRate() {
+        this.usageRate = this.calcUsageRate();
+        return this;
+    }
+    
+    @Override
+    @Observable
+    public Asset setDesc(final String desc) {
+        super.setDesc(desc);
+        return this;
+    }
+    
+    @Observable
+    public Asset setServiceStatus(final ServiceStatus serviceStatus) {
+        this.serviceStatus = serviceStatus;
+        return this;
+    }
+
+    public ServiceStatus getServiceStatus() {
+        return this.serviceStatus;
+    }
+
+    @Observable
+    public Asset setNumber(final String number) {
+        this.number = number;
+        return this;
+    }
+
+    public String getNumber() {
+        return this.number;
+    }
+
+}
+    
