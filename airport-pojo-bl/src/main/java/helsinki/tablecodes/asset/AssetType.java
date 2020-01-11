@@ -52,8 +52,7 @@ import ua.com.fielden.platform.utils.Pair;
  *
  * @author Developers
  *
- */
-
+ **/
 
 
 @KeyType(DynamicEntityKey.class)
@@ -63,63 +62,98 @@ import ua.com.fielden.platform.utils.Pair;
 @DescTitle("Description")
 @DisplayDescription
 @DescRequired
+
 public class AssetType extends ActivatableAbstractEntity<DynamicEntityKey> {
 
     private static final Pair<String, String> entityTitleAndDesc = TitlesDescsGetter.getEntityTitleAndDesc(AssetType.class);
     public static final String ENTITY_TITLE = entityTitleAndDesc.getKey();
     public static final String ENTITY_DESC = entityTitleAndDesc.getValue();
-    
-    
+  
     @IsProperty
     @MapTo
-    @Title("Name")
+    @Title(value = "name", desc = "Asset Type name")
     @CompositeKeyMember(1)
     private String name;
 
     @IsProperty
     @MapTo
-    @Title(value = "Asset Class", desc = "The class of this asset type.")
+    @Title(value = "Asset Class", desc = "An asset class for this type.")
     private AssetClass assetClass;
+    
+    @IsProperty
+    @Readonly
+    @Calculated
+    @Title(value = "Curr Management", desc = "Current management for this type.")
+    @Subtitles({@PathTitle(path="role", title="Management Role"),
+                @PathTitle(path="bu", title="Management Business Unit"),
+                @PathTitle(path="org", title="Management Organization"),
+                @PathTitle(path="startDate", title="Management Start Date")})
+    private AssetTypeManager currManagement;
+    
+    private static final EntityResultQueryModel<AssetTypeManager> managementSubQuery = select(AssetTypeManager.class).where()
+                                                                                .prop("assetType").eq().extProp("assetType").and()
+                                                                                .prop("startDate").le().now().and()
+                                                                                .prop("startDate").gt().extProp("startDate").model();
+    
+    protected static final ExpressionModel currManagement_ = expr().model(select(AssetTypeManager.class)
+                                                                .where().prop("assetType").eq().extProp("id").and()
+                                                                .prop("startDate").le().now().and()
+                                                                .notExists(managementSubQuery).model()).model();
 
     @IsProperty
     @Readonly
     @Calculated
-    @Title(value = "Current ownership", desc = "Desc")
-    @Subtitles({@PathTitle(path="role", title="Ownership Role"), 
+    @Title(value = "Curr Ownership", desc = "Desc")
+    @Subtitles({@PathTitle(path="role", title="Ownership Role"),
                 @PathTitle(path="bu", title="Ownership Business Unit"),
-                @PathTitle(path="org", title="Ownership Org"),
-                @PathTitle(path="startDate", title="Ownership Start Date"),
-                })
-    private AssetTypeOwnership currentOwnership;
+                @PathTitle(path="org", title="Ownership Organization"),
+                @PathTitle(path="startDate", title="Ownership Start Date")})
+    private AssetTypeOwnership currOwnership;
     
-    private static final EntityResultQueryModel<AssetTypeOwnership> subQuery = 
-            select(AssetTypeOwnership.class).where().prop("assetType").eq().extProp("assetType")
-            .and().prop("startDate").le().now()
-            .and().prop("startDate").gt().extProp("startDate").model();
-
-    protected static final ExpressionModel currentOwnership_ = expr().model(select(AssetTypeOwnership.class)
-            .where().prop("assetType").eq().extProp("id")
-            .and().prop("startDate").le().now()
-            .and().notExists(subQuery).model()).
-            model();
+    private static final EntityResultQueryModel<AssetTypeOwnership> ownershipSubQuery = select(AssetTypeOwnership.class).where()
+                                                                                .prop("assetType").eq().extProp("assetType").and()
+                                                                                .prop("startDate").le().now().and()
+                                                                                .prop("startDate").gt().extProp("startDate").model();
             
- 
+    protected static final ExpressionModel currOwnership_ = expr().model(select(AssetTypeOwnership.class)
+                                                            .where().prop("assetType").eq().extProp("id").and()
+                                                            .prop("startDate").le().now().and()
+                                                            .notExists(ownershipSubQuery).model()).model();
+
+
+    
     @Observable
-    protected AssetType setCurrentOwnership(final AssetTypeOwnership currentOwnership) {
-        this.currentOwnership = currentOwnership;
+    protected AssetType setCurrManagement(final AssetTypeManager currManagement) {
+        this.currManagement = currManagement;
         return this;
     }
 
-    public AssetTypeOwnership getCurrentOwnership() {
-        return currentOwnership;
+    public AssetTypeManager getCurrManagement() {
+        return currManagement;
     }
-
+    
+    @IsProperty
+    @Readonly
+    @Calculated
+    @Title(value = "Curr Operatorship", desc = "Desc")
+    @Subtitles({@PathTitle(path="role", title="Operatorship Role"),
+                @PathTitle(path="bu", title="Operatorship Business Unit"),
+                @PathTitle(path="org", title="Operatorship Organization"),
+                @PathTitle(path="startDate", title="Operatorship Start Date")})
+    private AssetTypeOperator currOperatorship;
+    
+    private static final EntityResultQueryModel<AssetTypeOperator> operatorshipSubQuery= select(AssetTypeOperator.class).where()
+                                                                                .prop("assetType").eq().extProp("assetType").and()
+                                                                                .prop("startDate").le().now().and()
+                                                                                .prop("startDate").gt().extProp("startDate").model();
+            
+    protected static final ExpressionModel currOperatorship_ = expr().model(select(AssetTypeOperator.class)
+                                                            .where().prop("assetType").eq().extProp("id").and()
+                                                            .prop("startDate").le().now().and()
+                                                            .notExists(operatorshipSubQuery).model()).model();
     
 
-    
 
-    
-    
     @Observable
     public AssetType setAssetClass(final AssetClass assetClass) {
         this.assetClass = assetClass;
@@ -129,20 +163,15 @@ public class AssetType extends ActivatableAbstractEntity<DynamicEntityKey> {
     public AssetClass getAssetClass() {
         return assetClass;
     }
+
     
     @Observable
     public AssetType setName(final String name) {
         this.name = name;
         return this;
     }
+    
 
-    
-    @Observable
-    public AssetType setActive(final boolean active) {
-        this.assetClass.setActive(active);
-        return this;
-    }
-    
     public String getName() {
         return name;
     }
@@ -153,11 +182,33 @@ public class AssetType extends ActivatableAbstractEntity<DynamicEntityKey> {
         super.setDesc(desc);
         return this;
     }
+    
+    @Override
+    @Observable
+    public AssetType setActive(boolean active) {
+        super.setActive(active);
+        return this;
+    }
+    
+    @Observable
+    protected AssetType setCurrOwnership(final AssetTypeOwnership currOwnership) {
+        this.currOwnership = currOwnership;
+        return this;
+    }
+
+    public AssetTypeOwnership getCurrOwnership() {
+        return currOwnership;
+    }
+    
+    @Observable
+    protected AssetType setCurrOperatorship(final AssetTypeOperator currOperatorship) {
+        this.currOperatorship = currOperatorship;
+        return this;
+    }
+
+    public AssetTypeOperator getCurrOperatorship() {
+        return currOperatorship;
+    }
+    
 
 }
-
-
-
-
-
-

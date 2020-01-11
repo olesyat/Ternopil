@@ -1,30 +1,34 @@
 package helsinki.webapp.config.assets;
 
-import static helsinki.common.StandardScrollingConfigs.standardStandaloneScrollingConfig;
 import static java.lang.String.format;
-import static ua.com.fielden.platform.web.PrefDim.mkDim;
+import static helsinki.common.StandardScrollingConfigs.standardStandaloneScrollingConfig;
 
 import java.util.Optional;
 
+import org.apache.tools.ant.Project;
+
 import com.google.inject.Injector;
 
+import helsinki.tablecodes.asset.AssetClass;
+import helsinki.tablecodes.asset.AssetType;
 import helsinki.assets.Asset;
 import helsinki.common.LayoutComposer;
 import helsinki.common.StandardActions;
-import helsinki.main.menu.assets.MiAsset;
-import helsinki.tablecodes.service.ServiceStatus;
-import ua.com.fielden.platform.web.PrefDim.Unit;
+
+import ua.com.fielden.platform.web.interfaces.ILayout.Device;
 import ua.com.fielden.platform.web.action.CentreConfigurationWebUiConfig.CentreConfigActions;
-import ua.com.fielden.platform.web.app.config.IWebUiBuilder;
-import ua.com.fielden.platform.web.centre.EntityCentre;
 import ua.com.fielden.platform.web.centre.api.EntityCentreConfig;
 import ua.com.fielden.platform.web.centre.api.actions.EntityActionConfig;
 import ua.com.fielden.platform.web.centre.api.impl.EntityCentreBuilder;
-import ua.com.fielden.platform.web.interfaces.ILayout.Device;
-import ua.com.fielden.platform.web.view.master.EntityMaster;
-import ua.com.fielden.platform.web.view.master.api.IMaster;
 import ua.com.fielden.platform.web.view.master.api.actions.MasterActions;
 import ua.com.fielden.platform.web.view.master.api.impl.SimpleMasterBuilder;
+import ua.com.fielden.platform.web.view.master.api.IMaster;
+import ua.com.fielden.platform.web.app.config.IWebUiBuilder;
+import helsinki.main.menu.assets.MiAsset;
+import ua.com.fielden.platform.web.centre.EntityCentre;
+import ua.com.fielden.platform.web.view.master.EntityMaster;
+import static ua.com.fielden.platform.web.PrefDim.mkDim;
+import ua.com.fielden.platform.web.PrefDim.Unit;
 /**
  * {@link Asset} Web UI configuration.
  *
@@ -54,7 +58,9 @@ public class AssetWebUiConfig {
      * @return created entity centre
      */
     private EntityCentre<Asset> createCentre(final Injector injector, final IWebUiBuilder builder) {
-        final String layout = LayoutComposer.mkVarGridForCentre(1, 1, 2, 3);
+
+        final String layout = LayoutComposer.mkGridForCentre(3, 3);
+
 
         final EntityActionConfig standardNewAction = StandardActions.NEW_ACTION.mkAction(Asset.class);
         final EntityActionConfig standardDeleteAction = StandardActions.DELETE_ACTION.mkAction(Asset.class);
@@ -70,25 +76,29 @@ public class AssetWebUiConfig {
                 .addTopAction(standardDeleteAction).also()
                 .addTopAction(standardSortAction).also()
                 .addTopAction(standardExportAction)
-//                .addCrit("this").asMulti().autocompleter(Asset.class).also()
-//                .addCrit("desc").asMulti().text().also()
+                .addCrit("this").asMulti().autocompleter(Asset.class).also()
+                .addCrit("desc").asMulti().text().also()
+                .addCrit("assetType").asMulti().autocompleter(AssetType.class).also()
                 .addCrit("finDet.initCost").asRange().decimal().also()
                 .addCrit("finDet.acquireDate").asRange().date().also()
-                .addCrit("serviceStatus").asMulti().autocompleter(ServiceStatus.class).also()
+                .addCrit("loadingRate").asMulti().text().also()
                 .addCrit("regulatory").asMulti().bool().also()
-                .addCrit("keyAsset").asMulti().bool().also()
-                .addCrit("expDays").asRange().integer().also()
-                .addCrit("usageRate").asRange().decimal()
+                .addCrit("keyService").asMulti().bool().also()
+                .addCrit("active").asMulti().bool()
                 .setLayoutFor(Device.DESKTOP, Optional.empty(), layout)
                 .setLayoutFor(Device.TABLET, Optional.empty(), layout)
                 .setLayoutFor(Device.MOBILE, Optional.empty(), layout)
                 .withScrollingConfig(standardStandaloneScrollingConfig(0))
-//                .addProp("this").order(1).asc().minWidth(100)
-//                    .withSummary("total_count_", "COUNT(SELF)", format("Count:The total number of matching %ss.", Asset.ENTITY_TITLE))
-//                    .withAction(standardEditAction).also()
-//                .addProp("desc").minWidth(200).also()
-//                .addProp("finDet.initCost").width(150).also()
-                .addProp("finDet.acquireDate").width(150)
+                .addProp("this").order(1).asc().minWidth(25)
+                    .withSummary("total_count_", "COUNT(SELF)", format("Count:The total number of matching %ss.", Asset.ENTITY_TITLE))
+                    .withAction(standardEditAction).also()
+                .addProp("desc").minWidth(50).also()
+                .addProp("finDet.initCost").width(80).also()
+                .addProp("finDet.acquireDate").width(150).also()
+                .addProp("finDet.project").width(80).also()
+                .addProp("regulatory").width(80).also()
+                .addProp("keyService").width(80).also()
+                .addProp("loadingRate").width(80)
                 //.addProp("prop").minWidth(100).withActionSupplier(builder.getOpenMasterAction(Entity.class)).also()
                 .addPrimaryAction(standardEditAction)
                 .build();
@@ -103,27 +113,44 @@ public class AssetWebUiConfig {
      * @return created entity master
      */
     private EntityMaster<Asset> createMaster(final Injector injector) {
-        final String layout = LayoutComposer.mkVarGridForMasterFitWidth(1, 1, 2, 3);
+        final String layout = LayoutComposer.mkVarGridForMasterFitWidth(1, 1, 2, 4, 4, 4, 4, 3, 1, 1);
 
         final IMaster<Asset> masterConfig = new SimpleMasterBuilder<Asset>().forEntity(Asset.class)
-//                .addProp("number").asSinglelineText().also()
-//                .addProp("desc").asMultilineText().also()
-                .addProp("finDet.initCost").asMoney().also()
-                .addProp("finDet.acquireDate").asDatePicker().also()
-                .addProp("serviceStatus").asAutocompleter().also()
+                .addProp("number").asSinglelineText().also()
+                .addProp("desc").asMultilineText().also()
+                .addProp("assetType").asAutocompleter().also()
+                .addProp("active").asCheckbox().also()
+                .addProp("assetType.currOwnership.role").asAutocompleter().also()
+                .addProp("assetType.currOwnership.bu").asAutocompleter().also()
+                .addProp("assetType.currOwnership.org").asAutocompleter().also()
+                .addProp("assetType.currOwnership.startDate").asDatePicker().also()
+                .addProp("currOwnership.role").asAutocompleter().also()
+                .addProp("currOwnership.bu").asAutocompleter().also()
+                .addProp("currOwnership.org").asAutocompleter().also()
+                .addProp("currOwnership.startDate").asDatePicker().also()
+                .addProp("assetType.currOperatorship.role").asAutocompleter().also()
+                .addProp("assetType.currOperatorship.bu").asAutocompleter().also()
+                .addProp("assetType.currOperatorship.org").asAutocompleter().also()
+                .addProp("assetType.currOperatorship.startDate").asDatePicker().also()
+                .addProp("currOperatorship.role").asAutocompleter().also()
+                .addProp("currOperatorship.bu").asAutocompleter().also()
+                .addProp("currOperatorship.org").asAutocompleter().also()
+                .addProp("currOperatorship.startDate").asDatePicker().also()
                 .addProp("regulatory").asCheckbox().also()
-                .addProp("keyAsset").asCheckbox().also()
-                .addProp("expDays").asDecimal().also()
-                .addProp("usageRate").asDecimal().also()
+                .addProp("keyService").asCheckbox().also()
+                .addProp("loadingRate").asSinglelineText().also()
+//                .addProp("finDet.initCost").asMoney().also()
+//                .addProp("finDet.acquireDate").asDatePicker().also()
+                
                 .addAction(MasterActions.REFRESH).shortDesc("Cancel").longDesc("Cancel action")
                 .addAction(MasterActions.SAVE)
                 .setActionBarLayoutFor(Device.DESKTOP, Optional.empty(), LayoutComposer.mkActionLayoutForMaster())
                 .setLayoutFor(Device.DESKTOP, Optional.empty(), layout)
                 .setLayoutFor(Device.TABLET, Optional.empty(), layout)
                 .setLayoutFor(Device.MOBILE, Optional.empty(), layout)
-                .withDimensions(mkDim(LayoutComposer.SIMPLE_ONE_COLUMN_MASTER_DIM_WIDTH, 300, Unit.PX))
+                .withDimensions(mkDim(LayoutComposer.SIMPLE_THREE_COLUMN_MASTER_DIM_WIDTH, 520, Unit.PX))
                 .done();
-
+                
         return new EntityMaster<>(Asset.class, masterConfig, injector);
     }
 }

@@ -2,6 +2,8 @@ package helsinki.assets;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.google.inject.Inject;
 
@@ -22,17 +24,26 @@ import ua.com.fielden.platform.keygen.KeyNumber;
  */
 @EntityType(Asset.class)
 public class AssetDao extends CommonEntityDao<Asset> implements IAsset {
-    public static final String ERR_FAILED_SAVE = "Deliberate save exception.";
+	public static final String ERR_FAILED_SAVE = "Deliberate save exception.";
 
-    public static final String DEFAULT_ASSET_NUMBER = "NEXT NUMBER WILL BE GENERATED"; 
-    
+    public static final String DEFAULT_ASSET_NUMBER = "NEXT NUMBER WILL BE GENERATED UPON SAVE.";
+
     private boolean throwExceptionForTestingPurposes = false;
+
 
     @Inject
     public AssetDao(final IFilter filter) {
         super(filter);
     }
-
+    
+    @Override
+        public Asset new_() {
+            // TODO Auto-generated method stub
+            final Asset asset =  super.new_();
+            asset.setNumber(DEFAULT_ASSET_NUMBER);
+            return asset;
+        }
+    
     @Override
     @SessionRequired
     public Asset save(final Asset asset) {
@@ -40,8 +51,12 @@ public class AssetDao extends CommonEntityDao<Asset> implements IAsset {
         try {
             if (!wasPersisted) {
                 final IKeyNumber coKeyNumber = co(KeyNumber.class);
-                final Integer nextNumber = coKeyNumber.nextNumber("ASSET_NUMBER");
-                asset.setNumber(nextNumber.toString());
+                String nextNumber = coKeyNumber.nextNumber("ASSET_NUMBER").toString();
+                String toAdd = IntStream.range(0, 6 - nextNumber.length())
+                        .mapToObj(x -> "0")
+                        .collect(Collectors.joining());
+                asset.setNumber(toAdd.concat(nextNumber));
+                
             }
 
             // save asset
@@ -79,13 +94,6 @@ public class AssetDao extends CommonEntityDao<Asset> implements IAsset {
     }
 
     @Override
-    public Asset new_() {
-        final Asset asset = super.new_();
-        asset.setNumber(DEFAULT_ASSET_NUMBER);
-        return asset;
-    }
-
-    @Override
     @SessionRequired
     public int batchDelete(final Collection<Long> entitiesIds) {
         return defaultBatchDelete(entitiesIds);
@@ -99,6 +107,6 @@ public class AssetDao extends CommonEntityDao<Asset> implements IAsset {
 
     @Override
     protected IFetchProvider<Asset> createFetchProvider() {
-        return FETCH_PROVIDER;
-    }
-}
+        // TODO: uncomment the following line and specify the properties, which are required for the UI in IAsset.FETCH_PROVIDER. Then remove the line after.
+      return FETCH_PROVIDER;
+    }}

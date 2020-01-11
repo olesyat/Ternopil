@@ -54,7 +54,7 @@ public class RoleWebUiConfig {
      * @return created entity centre
      */
     private EntityCentre<Role> createCentre(final Injector injector, final IWebUiBuilder builder) {
-        final String layout = LayoutComposer.mkGridForCentre(1, 1);
+        final String layout = LayoutComposer.mkGridForCentre(1, 2);
 
         final EntityActionConfig standardNewAction = StandardActions.NEW_ACTION.mkAction(Role.class);
         final EntityActionConfig standardDeleteAction = StandardActions.DELETE_ACTION.mkAction(Role.class);
@@ -70,15 +70,18 @@ public class RoleWebUiConfig {
                 .addTopAction(standardDeleteAction).also()
                 .addTopAction(standardSortAction).also()
                 .addTopAction(standardExportAction)
-                .addCrit("name").asMulti().text()
+                .addCrit("this").asMulti().autocompleter(Role.class).also()
+                .addCrit("desc").asMulti().text()
                 .setLayoutFor(Device.DESKTOP, Optional.empty(), layout)
                 .setLayoutFor(Device.TABLET, Optional.empty(), layout)
                 .setLayoutFor(Device.MOBILE, Optional.empty(), layout)
                 .withScrollingConfig(standardStandaloneScrollingConfig(0))
-                .addProp("name").order(1).asc().minWidth(100)
+                .addProp("this").order(1).asc().minWidth(100)
                     .withSummary("total_count_", "COUNT(SELF)", format("Count:The total number of matching %ss.", Role.ENTITY_TITLE))
-                    .withAction(standardEditAction)
-                    .addPrimaryAction(standardEditAction)
+                    .withAction(standardEditAction).also()
+                .addProp("desc").minWidth(100)
+                //.addProp("prop").minWidth(100).withActionSupplier(builder.getOpenMasterAction(Entity.class)).also()
+                .addPrimaryAction(standardEditAction)
                 .build();
 
         return new EntityCentre<>(MiRole.class, MiRole.class.getSimpleName(), ecc, injector, null);
@@ -91,10 +94,11 @@ public class RoleWebUiConfig {
      * @return created entity master
      */
     private EntityMaster<Role> createMaster(final Injector injector) {
-        final String layout = LayoutComposer.mkGridForMasterFitWidth(1, 1);
+        final String layout = LayoutComposer.mkGridForMasterFitWidth(2, 1);
 
         final IMaster<Role> masterConfig = new SimpleMasterBuilder<Role>().forEntity(Role.class)
                 .addProp("name").asSinglelineText().also()
+                .addProp("desc").asMultilineText().also()
                 .addAction(MasterActions.REFRESH).shortDesc("Cancel").longDesc("Cancel action")
                 .addAction(MasterActions.SAVE)
                 .setActionBarLayoutFor(Device.DESKTOP, Optional.empty(), LayoutComposer.mkActionLayoutForMaster())
