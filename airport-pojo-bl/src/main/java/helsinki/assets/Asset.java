@@ -66,10 +66,10 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
                 @PathTitle(path="currOwnership.bu", title="Type Ownership Business Unit"),
                 @PathTitle(path="currOwnership.org", title="Type Ownership Organization"),
                 @PathTitle(path="currOwnership.startDate", title="Type Ownership Start Date"),
-                @PathTitle(path="currOperatorship.role", title="Type Operatorship Role"),
-                @PathTitle(path="currOperatorship.bu", title="Type Operatorship Business Unit"),
-                @PathTitle(path="currOperatorship.org", title="Type Operatorship Organization"),
-                @PathTitle(path="currOperatorship.startDate", title="Type Operatorship Start Date")})
+                @PathTitle(path="currOperator.role", title="Type Operator Role"),
+                @PathTitle(path="currOperator.bu", title="Type Operator Business Unit"),
+                @PathTitle(path="currOperator.org", title="Type Operator Organization"),
+                @PathTitle(path="currOperator.startDate", title="Type Operator Start Date")})
     private AssetType assetType;
     
     @IsProperty
@@ -88,8 +88,8 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
 
     @IsProperty
     @MapTo
-    @Title(value = "loadingRate", desc = "Loading/usage rate for the Asset.")
-    private String loadingRate;
+    @Title(value = "rate", desc = "Loading/usage rate for the Asset.")
+    private String rate;
     
     @IsProperty
     @Readonly
@@ -114,52 +114,52 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     @IsProperty
     @Readonly
     @Calculated
-    @Title(value = "Curr Management", desc = "Desc")
-    @Subtitles({@PathTitle(path="role", title="Management Role"),
-                @PathTitle(path="bu", title="Management Business Unit"),
-                @PathTitle(path="org", title="Management Organization"),
-                @PathTitle(path="startDate", title="Management Start Date")})
-    private AssetManager currManagement;
+    @Title(value = "Curr Manager", desc = "Desc")
+    @Subtitles({@PathTitle(path="role", title="Manager Role"),
+                @PathTitle(path="bu", title="Manager Business Unit"),
+                @PathTitle(path="org", title="Manager Organization"),
+                @PathTitle(path="startDate", title="Manager Start Date")})
+    private AssetManager currManager;
 
-    private static final EntityResultQueryModel<AssetManager> managementSubQuery = select(AssetManager.class).where()
+    private static final EntityResultQueryModel<AssetManager> managerSubQuery = select(AssetManager.class).where()
                                                                                 .prop("asset").eq().extProp("asset").and()
                                                                                 .prop("startDate").le().now().and()
                                                                                 .prop("startDate").gt().extProp("startDate").model();
 
-    protected static final ExpressionModel currManagement_ = expr().model(select(AssetManager.class)
+    protected static final ExpressionModel currManager_ = expr().model(select(AssetManager.class)
                                                             .where().prop("asset").eq().extProp("id").and()
                                                             .prop("startDate").le().now().and()
-                                                            .notExists(managementSubQuery).model()).model();
+                                                            .notExists(managerSubQuery).model()).model();
 
     @Observable
-    protected Asset setCurrManagement(final AssetManager currManagement) {
-        this.currManagement = currManagement;
+    protected Asset setCurrManager(final AssetManager currManager) {
+        this.currManager = currManager;
         return this;
     }
 
-    public AssetManager getCurrManagement() {
-        return currManagement;
+    public AssetManager getCurrManager() {
+        return currManager;
     }
   
     @IsProperty
     @Readonly
     @Calculated
-    @Title(value = "Curr Operatorship", desc = "Desc")
-    @Subtitles({@PathTitle(path="role", title="Operatorship Role"),
-                @PathTitle(path="bu", title="Operatorship Business Unit"),
-                @PathTitle(path="org", title="Operatorship Organization"),
-                @PathTitle(path="startDate", title="Operatorship Start Date")})
-    private AssetOperator currOperatorship;
+    @Title(value = "Curr Operator", desc = "Desc")
+    @Subtitles({@PathTitle(path="role", title="Operator Role"),
+                @PathTitle(path="bu", title="Operator Business Unit"),
+                @PathTitle(path="org", title="Operator Organization"),
+                @PathTitle(path="startDate", title="Operator Start Date")})
+    private AssetOperator currOperator;
     
-    private static final EntityResultQueryModel<AssetOperator> operatorshipSubQuery = select(AssetOperator.class).where()
+    private static final EntityResultQueryModel<AssetOperator> OperatorSubQuery = select(AssetOperator.class).where()
                                                                                 .prop("asset").eq().extProp("asset").and()
                                                                                 .prop("startDate").le().now().and()
                                                                                 .prop("startDate").gt().extProp("startDate").model();
             
-    protected static final ExpressionModel currOperatorship_ = expr().model(select(AssetOperator.class)
+    protected static final ExpressionModel currOperator_ = expr().model(select(AssetOperator.class)
                                                             .where().prop("asset").eq().extProp("id").and()
                                                             .prop("startDate").le().now().and()
-                                                            .notExists(operatorshipSubQuery).model()).model();
+                                                            .notExists(OperatorSubQuery).model()).model();
 
     @Observable
     protected Asset setCurrOwnership(final AssetOwnership currOwnership) {
@@ -172,31 +172,31 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     }
     
     @Observable
-    protected Asset setCurrOperatorship(final AssetOperator currOperatorship) {
-        this.currOperatorship = currOperatorship;
+    protected Asset setCurrOperator(final AssetOperator currOperator) {
+        this.currOperator = currOperator;
         return this;
     }
 
-    public AssetOperator getCurrOperatorship() {
-        return currOperatorship;
+    public AssetOperator getCurrOperator() {
+        return currOperator;
     }
 
 
 
     @Observable
-    public Asset setLoadingRate(final String loadingRate) {
-        if (!loadingRate.substring(loadingRate.length() - 1, loadingRate.length()).equals("%")) {
-            this.loadingRate = loadingRate.concat("%");}
+    public Asset setrate(final String rate) {
+        if (!rate.substring(rate.length() - 1, rate.length()).equals("%")) {
+            this.rate = rate.concat("%");}
         else {
-            this.loadingRate = loadingRate;
+            this.rate = rate;
         }
 
         return this;
     }
 
     @Observable
-    public String getLoadingRate() {
-        return loadingRate.substring(0, loadingRate.length() - 1);
+    public String getrate() {
+        return rate.substring(0, rate.length() - 1);
     }
    
 

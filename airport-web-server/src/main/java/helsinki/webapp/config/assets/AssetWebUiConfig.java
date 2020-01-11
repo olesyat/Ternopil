@@ -81,7 +81,7 @@ public class AssetWebUiConfig {
                 .addCrit("assetType").asMulti().autocompleter(AssetType.class).also()
                 .addCrit("finDet.initCost").asRange().decimal().also()
                 .addCrit("finDet.acquireDate").asRange().date().also()
-                .addCrit("loadingRate").asMulti().text().also()
+                .addCrit("rate").asMulti().text().also()
                 .addCrit("regulatory").asMulti().bool().also()
                 .addCrit("keyService").asMulti().bool().also()
                 .addCrit("active").asMulti().bool()
@@ -98,7 +98,7 @@ public class AssetWebUiConfig {
                 .addProp("finDet.project").width(80).also()
                 .addProp("regulatory").width(80).also()
                 .addProp("keyService").width(80).also()
-                .addProp("loadingRate").width(80)
+                .addProp("rate").width(80)
                 //.addProp("prop").minWidth(100).withActionSupplier(builder.getOpenMasterAction(Entity.class)).also()
                 .addPrimaryAction(standardEditAction)
                 .build();
@@ -113,7 +113,7 @@ public class AssetWebUiConfig {
      * @return created entity master
      */
     private EntityMaster<Asset> createMaster(final Injector injector) {
-        final String layout = LayoutComposer.mkVarGridForMasterFitWidth(1, 1, 2, 4, 4, 4, 4, 3, 1, 1);
+        final String layout = LayoutComposer.mkVarGridForMasterFitWidth(1, 1, 2, 4, 4, 4, 4, 4, 4, 3);
 
         final IMaster<Asset> masterConfig = new SimpleMasterBuilder<Asset>().forEntity(Asset.class)
                 .addProp("number").asSinglelineText().also()
@@ -128,17 +128,25 @@ public class AssetWebUiConfig {
                 .addProp("currOwnership.bu").asAutocompleter().also()
                 .addProp("currOwnership.org").asAutocompleter().also()
                 .addProp("currOwnership.startDate").asDatePicker().also()
-                .addProp("assetType.currOperatorship.role").asAutocompleter().also()
-                .addProp("assetType.currOperatorship.bu").asAutocompleter().also()
-                .addProp("assetType.currOperatorship.org").asAutocompleter().also()
-                .addProp("assetType.currOperatorship.startDate").asDatePicker().also()
-                .addProp("currOperatorship.role").asAutocompleter().also()
-                .addProp("currOperatorship.bu").asAutocompleter().also()
-                .addProp("currOperatorship.org").asAutocompleter().also()
-                .addProp("currOperatorship.startDate").asDatePicker().also()
+                .addProp("assetType.currOperator.role").asAutocompleter().also()
+                .addProp("assetType.currOperator.bu").asAutocompleter().also()
+                .addProp("assetType.currOperator.org").asAutocompleter().also()
+                .addProp("assetType.currOperator.startDate").asDatePicker().also()
+                .addProp("currOperator.role").asAutocompleter().also()
+                .addProp("currOperator.bu").asAutocompleter().also()
+                .addProp("currOperator.org").asAutocompleter().also()
+                .addProp("currOperator.startDate").asDatePicker().also()
+                .addProp("assetType.currManager.role").asAutocompleter().also()
+                .addProp("assetType.currManager.bu").asAutocompleter().also()
+                .addProp("assetType.currManager.org").asAutocompleter().also()
+                .addProp("assetType.currManager.startDate").asDatePicker().also()
+                .addProp("currManager.role").asAutocompleter().also()
+                .addProp("currManager.bu").asAutocompleter().also()
+                .addProp("currManager.org").asAutocompleter().also()
+                .addProp("currManager.startDate").asDatePicker().also()             
                 .addProp("regulatory").asCheckbox().also()
                 .addProp("keyService").asCheckbox().also()
-                .addProp("loadingRate").asSinglelineText().also()
+                .addProp("rate").asSinglelineText().also()
 //                .addProp("finDet.initCost").asMoney().also()
 //                .addProp("finDet.acquireDate").asDatePicker().also()
                 
