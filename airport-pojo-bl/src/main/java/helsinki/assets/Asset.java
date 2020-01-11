@@ -184,7 +184,7 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
 
 
     @Observable
-    public Asset setrate(final String rate) {
+    public Asset setRate(final String rate) {
         if (!rate.substring(rate.length() - 1, rate.length()).equals("%")) {
             this.rate = rate.concat("%");}
         else {
@@ -195,7 +195,7 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
     }
 
     @Observable
-    public String getrate() {
+    public String getRate() {
         return rate.substring(0, rate.length() - 1);
     }
    
