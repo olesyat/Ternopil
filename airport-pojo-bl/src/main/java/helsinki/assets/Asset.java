@@ -12,6 +12,7 @@ import ua.com.fielden.platform.entity.DynamicEntityKey;
 import ua.com.fielden.platform.entity.annotation.Calculated;
 import ua.com.fielden.platform.entity.annotation.CompanionObject;
 import ua.com.fielden.platform.entity.annotation.CompositeKeyMember;
+import ua.com.fielden.platform.entity.annotation.CritOnly;
 import ua.com.fielden.platform.entity.annotation.DescRequired;
 import ua.com.fielden.platform.entity.annotation.DescTitle;
 import ua.com.fielden.platform.entity.annotation.DisplayDescription;
@@ -88,6 +89,7 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
 
     @IsProperty
     @MapTo
+    @Readonly
     @Title(value = "rate", desc = "Loading/usage rate for the Asset.")
     private String rate;
     
@@ -185,18 +187,13 @@ public class Asset extends ActivatableAbstractEntity<DynamicEntityKey> {
 
     @Observable
     public Asset setRate(final String rate) {
-        if (!rate.substring(rate.length() - 1, rate.length()).equals("%")) {
-            this.rate = rate.concat("%");}
-        else {
-            this.rate = rate;
-        }
-
+        this.rate = "THIS WILL BE GENERATED AFTER ASSET IS IN LONGER USE";
         return this;
     }
 
     @Observable
     public String getRate() {
-        return rate.substring(0, rate.length() - 1);
+        return rate;
     }
    
 

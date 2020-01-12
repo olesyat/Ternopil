@@ -23,7 +23,7 @@ public class AssetOwnershipDao extends CommonEntityDao<AssetOwnership> implement
     @Override
     protected IFetchProvider<AssetOwnership> createFetchProvider() {
         // TODO: uncomment the following line and specify the properties, which are required for the UI in IAssetOwnership.FETCH_PROVIDER. Then remove the line after.
-        // return FETCH_PROVIDER;
-        throw new UnsupportedOperationException("Please specify the properties, which are required for the UI in IAssetOwnership.FETCH_PROVIDER");
+        return FETCH_PROVIDER;
+        //throw new UnsupportedOperationException("Please specify the properties, which are required for the UI in IAssetOwnership.FETCH_PROVIDER");
     }
 }

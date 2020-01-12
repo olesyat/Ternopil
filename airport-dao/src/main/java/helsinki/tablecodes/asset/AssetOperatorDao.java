@@ -23,7 +23,7 @@ public class AssetOperatorDao extends CommonEntityDao<AssetOperator> implements 
     @Override
     protected IFetchProvider<AssetOperator> createFetchProvider() {
         // TODO: uncomment the following line and specify the properties, which are required for the UI in IAssetOperator.FETCH_PROVIDER. Then remove the line after.
-        // return FETCH_PROVIDER;
-        throw new UnsupportedOperationException("Please specify the properties, which are required for the UI in IAssetOperator.FETCH_PROVIDER");
+         return FETCH_PROVIDER;
+        //throw new UnsupportedOperationException("Please specify the properties, which are required for the UI in IAssetOperator.FETCH_PROVIDER");
     }
 }

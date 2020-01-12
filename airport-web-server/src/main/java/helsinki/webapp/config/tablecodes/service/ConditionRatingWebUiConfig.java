@@ -54,7 +54,7 @@ public class ConditionRatingWebUiConfig {
      * @return created entity centre
      */
     private EntityCentre<ConditionRating> createCentre(final Injector injector, final IWebUiBuilder builder) {
-        final String layout = LayoutComposer.mkGridForCentre(1, 1);
+        final String layout = LayoutComposer.mkGridForCentre(1, 2);
 
         final EntityActionConfig standardNewAction = StandardActions.NEW_ACTION.mkAction(ConditionRating.class);
         final EntityActionConfig standardDeleteAction = StandardActions.DELETE_ACTION.mkAction(ConditionRating.class);
@@ -70,14 +70,16 @@ public class ConditionRatingWebUiConfig {
                 .addTopAction(standardDeleteAction).also()
                 .addTopAction(standardSortAction).also()
                 .addTopAction(standardExportAction)
-                .addCrit("rating").asMulti().text()
+                .addCrit("this").asMulti().autocompleter(ConditionRating.class).also()
+                .addCrit("desc").asMulti().text()
                 .setLayoutFor(Device.DESKTOP, Optional.empty(), layout)
                 .setLayoutFor(Device.TABLET, Optional.empty(), layout)
                 .setLayoutFor(Device.MOBILE, Optional.empty(), layout)
                 .withScrollingConfig(standardStandaloneScrollingConfig(0))
-                .addProp("rating").order(1).asc().minWidth(100)
+                .addProp("this").order(1).asc().minWidth(100)
                     .withSummary("total_count_", "COUNT(SELF)", format("Count:The total number of matching %ss.", ConditionRating.ENTITY_TITLE))
-                    .withAction(standardEditAction)
+                    .withAction(standardEditAction).also()
+                .addProp("desc").minWidth(100)
                 //.addProp("prop").minWidth(100).withActionSupplier(builder.getOpenMasterAction(Entity.class)).also()
                 .addPrimaryAction(standardEditAction)
                 .build();
@@ -92,10 +94,11 @@ public class ConditionRatingWebUiConfig {
      * @return created entity master
      */
     private EntityMaster<ConditionRating> createMaster(final Injector injector) {
-        final String layout = LayoutComposer.mkGridForMasterFitWidth(1, 1);
+        final String layout = LayoutComposer.mkGridForMasterFitWidth(1, 2);
 
         final IMaster<ConditionRating> masterConfig = new SimpleMasterBuilder<ConditionRating>().forEntity(ConditionRating.class)
                 .addProp("rating").asSinglelineText().also()
+                .addProp("desc").asMultilineText().also()
                 .addAction(MasterActions.REFRESH).shortDesc("Cancel").longDesc("Cancel action")
                 .addAction(MasterActions.SAVE)
                 .setActionBarLayoutFor(Device.DESKTOP, Optional.empty(), LayoutComposer.mkActionLayoutForMaster())

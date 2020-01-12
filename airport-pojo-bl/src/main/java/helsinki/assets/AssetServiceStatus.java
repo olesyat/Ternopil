@@ -25,7 +25,6 @@ import ua.com.fielden.platform.utils.Pair;
  * @author Developers
  *
  */
-
 @KeyType(DynamicEntityKey.class)
 @KeyTitle("AssetServiceStatus")
 @CompanionObject(IAssetServiceStatus.class)

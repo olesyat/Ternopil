@@ -12,9 +12,12 @@ import helsinki.assets.Asset;
 import helsinki.common.LayoutComposer;
 import helsinki.common.StandardActions;
 import helsinki.main.menu.tablecodes.asset.MiAssetOwnership;
+import helsinki.main.menu.tablecodes.asset.MiAssetOwnership;
 import helsinki.organizational.BusinessUnit;
 import helsinki.organizational.Organization;
 import helsinki.organizational.Role;
+import helsinki.tablecodes.asset.AssetOwnership;
+import helsinki.tablecodes.asset.AssetType;
 import helsinki.tablecodes.asset.AssetOwnership;
 import ua.com.fielden.platform.web.PrefDim.Unit;
 import ua.com.fielden.platform.web.action.CentreConfigurationWebUiConfig.CentreConfigActions;
@@ -57,7 +60,7 @@ public class AssetOwnershipWebUiConfig {
      * @return created entity centre
      */
     private EntityCentre<AssetOwnership> createCentre(final Injector injector, final IWebUiBuilder builder) {
-        final String layout = LayoutComposer.mkGridForCentre(1, 2);
+        final String layout = LayoutComposer.mkVarGridForCentre(2, 3);
 
         final EntityActionConfig standardNewAction = StandardActions.NEW_ACTION.mkAction(AssetOwnership.class);
         final EntityActionConfig standardDeleteAction = StandardActions.DELETE_ACTION.mkAction(AssetOwnership.class);
@@ -84,7 +87,7 @@ public class AssetOwnershipWebUiConfig {
                 .withScrollingConfig(standardStandaloneScrollingConfig(0))
                 .addProp("asset").order(1).asc().minWidth(100)
                     .withSummary("total_count_", "COUNT(SELF)", format("Count:The total number of matching %ss.", AssetOwnership.ENTITY_TITLE))
-                    .withAction(standardEditAction).also()
+                    .withActionSupplier(builder.getOpenMasterAction(Asset.class)).also()
                 .addProp("startDate").order(2).desc().width(150).also()
                 .addProp("role").minWidth(100).also()
                 .addProp("bu").minWidth(100).also()

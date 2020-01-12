@@ -103,7 +103,7 @@ public class AssetOperatorWebUiConfig {
      * @return created entity master
      */
     private EntityMaster<AssetOperator> createMaster(final Injector injector) {
-        final String layout = LayoutComposer.mkVarGridForMasterFitWidth(5, 1);
+        final String layout = LayoutComposer.mkVarGridForMasterFitWidth(2, 3);
 
         final IMaster<AssetOperator> masterConfig = new SimpleMasterBuilder<AssetOperator>().forEntity(AssetOperator.class)
                 .addProp("asset").asAutocompleter().also()

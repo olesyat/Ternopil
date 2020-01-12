@@ -34,6 +34,7 @@ import ua.com.fielden.platform.web.view.master.api.impl.SimpleMasterBuilder;
  * @author Developers
  *
  */
+
 public class AssetTypeOwnershipWebUiConfig {
 
     public final EntityCentre<AssetTypeOwnership> centre;
@@ -67,7 +68,6 @@ public class AssetTypeOwnershipWebUiConfig {
         builder.registerOpenMasterAction(AssetTypeOwnership.class, standardEditAction);
 
         final EntityCentreConfig<AssetTypeOwnership> ecc = EntityCentreBuilder.centreFor(AssetTypeOwnership.class)
-                //.runAutomatically()
                 .addFrontAction(standardNewAction)
                 .addTopAction(standardNewAction).also()
                 .addTopAction(standardDeleteAction).also()
@@ -77,8 +77,7 @@ public class AssetTypeOwnershipWebUiConfig {
                 .addCrit("startDate").asRange().date().also()
                 .addCrit("role").asMulti().autocompleter(Role.class).also()
                 .addCrit("bu").asMulti().autocompleter(BusinessUnit.class).also()
-                .addCrit("org").asMulti().autocompleter(Organization.class).also()
-                .addCrit("desc").asMulti().text()
+                .addCrit("org").asMulti().autocompleter(Organization.class)
                 .setLayoutFor(Device.DESKTOP, Optional.empty(), layout)
                 .setLayoutFor(Device.TABLET, Optional.empty(), layout)
                 .setLayoutFor(Device.MOBILE, Optional.empty(), layout)
@@ -86,13 +85,11 @@ public class AssetTypeOwnershipWebUiConfig {
                 .addProp("assetType").order(1).asc().minWidth(100)
                     .withSummary("total_count_", "COUNT(SELF)", format("Count:The total number of matching %ss.", AssetTypeOwnership.ENTITY_TITLE))
                     .withActionSupplier(builder.getOpenMasterAction(AssetType.class)).also()
-                    .addProp("startDate").order(2).desc().width(150).also()
-                    .addProp("role").minWidth(100).also()
-                    .addProp("bu").minWidth(100).also()
-                    .addProp("org").minWidth(100)
-
-                    //.addProp("desc").minWidth(100)
-                //.addProp("prop").minWidth(100).withActionSupplier(builder.getOpenMasterAction(Entity.class)).also()
+                .addProp("startDate").order(2).desc().width(150).also()
+                // when you have masters for Role, BU and ORG - add ActionSupplier to them as well
+                .addProp("role").minWidth(100).also()
+                .addProp("bu").minWidth(100).also()
+                .addProp("org").minWidth(100)
                 .addPrimaryAction(standardEditAction)
                 .build();
 
@@ -106,7 +103,7 @@ public class AssetTypeOwnershipWebUiConfig {
      * @return created entity master
      */
     private EntityMaster<AssetTypeOwnership> createMaster(final Injector injector) {
-        final String layout = LayoutComposer.mkVarGridForMasterFitWidth(2, 3);
+        final String layout = LayoutComposer.mkGridForMasterFitWidth(5, 1);
 
         final IMaster<AssetTypeOwnership> masterConfig = new SimpleMasterBuilder<AssetTypeOwnership>().forEntity(AssetTypeOwnership.class)
                 .addProp("assetType").asAutocompleter().also()

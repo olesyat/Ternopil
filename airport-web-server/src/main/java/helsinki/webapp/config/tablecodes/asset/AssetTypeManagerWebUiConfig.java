@@ -9,6 +9,7 @@ import com.google.inject.Injector;
 
 import helsinki.tablecodes.asset.AssetType;
 import helsinki.tablecodes.asset.AssetTypeManager;
+import helsinki.tablecodes.asset.AssetTypeManager;
 import helsinki.common.LayoutComposer;
 import helsinki.common.StandardActions;
 
@@ -21,6 +22,7 @@ import ua.com.fielden.platform.web.view.master.api.actions.MasterActions;
 import ua.com.fielden.platform.web.view.master.api.impl.SimpleMasterBuilder;
 import ua.com.fielden.platform.web.view.master.api.IMaster;
 import ua.com.fielden.platform.web.app.config.IWebUiBuilder;
+import helsinki.main.menu.tablecodes.asset.MiAssetTypeManager;
 import helsinki.main.menu.tablecodes.asset.MiAssetTypeManager;
 import helsinki.organizational.BusinessUnit;
 import helsinki.organizational.Organization;
@@ -35,6 +37,7 @@ import ua.com.fielden.platform.web.PrefDim.Unit;
  * @author Developers
  *
  */
+
 public class AssetTypeManagerWebUiConfig {
 
     public final EntityCentre<AssetTypeManager> centre;
@@ -68,7 +71,6 @@ public class AssetTypeManagerWebUiConfig {
         builder.registerOpenMasterAction(AssetTypeManager.class, standardEditAction);
 
         final EntityCentreConfig<AssetTypeManager> ecc = EntityCentreBuilder.centreFor(AssetTypeManager.class)
-                //.runAutomatically()
                 .addFrontAction(standardNewAction)
                 .addTopAction(standardNewAction).also()
                 .addTopAction(standardDeleteAction).also()
@@ -86,8 +88,11 @@ public class AssetTypeManagerWebUiConfig {
                 .addProp("assetType").order(1).asc().minWidth(100)
                     .withSummary("total_count_", "COUNT(SELF)", format("Count:The total number of matching %ss.", AssetTypeManager.ENTITY_TITLE))
                     .withActionSupplier(builder.getOpenMasterAction(AssetType.class)).also()
-                .addProp("desc").minWidth(100)
-                //.addProp("prop").minWidth(100).withActionSupplier(builder.getOpenMasterAction(Entity.class)).also()
+                .addProp("startDate").order(2).desc().width(150).also()
+                // when you have masters for Role, BU and ORG - add ActionSupplier to them as well
+                .addProp("role").minWidth(100).also()
+                .addProp("bu").minWidth(100).also()
+                .addProp("org").minWidth(100)
                 .addPrimaryAction(standardEditAction)
                 .build();
 
@@ -101,7 +106,7 @@ public class AssetTypeManagerWebUiConfig {
      * @return created entity master
      */
     private EntityMaster<AssetTypeManager> createMaster(final Injector injector) {
-        final String layout = LayoutComposer.mkGridForMasterFitWidth(2, 3);
+        final String layout = LayoutComposer.mkGridForMasterFitWidth(5, 1);
 
         final IMaster<AssetTypeManager> masterConfig = new SimpleMasterBuilder<AssetTypeManager>().forEntity(AssetTypeManager.class)
                 .addProp("assetType").asAutocompleter().also()

@@ -5,7 +5,7 @@ import java.util.Date;
 import helsinki.organizational.BusinessUnit;
 import helsinki.organizational.Organization;
 import helsinki.organizational.Role;
-import helsinki.tablecodes.asset.definers.AssetManagingExclusivityDefiner;
+import helsinki.tablecodes.asset.definers.AssetTypeManagerExclusivityDefiner;
 import ua.com.fielden.platform.entity.AbstractPersistentEntity;
 import ua.com.fielden.platform.entity.DynamicEntityKey;
 import ua.com.fielden.platform.entity.annotation.CompanionObject;
@@ -43,19 +43,19 @@ public class AbstractManagement extends AbstractPersistentEntity<DynamicEntityKe
     @IsProperty
     @MapTo
     @Title(value = "Role", desc = "Role that manages asset of the specified asset type.")
-    @AfterChange(AssetManagingExclusivityDefiner.class)
+    @AfterChange(AssetTypeManagerExclusivityDefiner.class)
     private Role role;
     
     @IsProperty
     @MapTo
     @Title(value = "Business Unit", desc = "Business Unit that manages asset of the specified asset type.")
-    @AfterChange(AssetManagingExclusivityDefiner.class)
+    @AfterChange(AssetTypeManagerExclusivityDefiner.class)
     private BusinessUnit bu;
     
     @IsProperty
     @MapTo
     @Title(value = "Organization", desc = "Organization that manages asset of the specified asset type.")
-    @AfterChange(AssetManagingExclusivityDefiner.class)
+    @AfterChange(AssetTypeManagerExclusivityDefiner.class)
     private Organization org;
      
 

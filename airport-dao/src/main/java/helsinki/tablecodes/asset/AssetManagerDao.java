@@ -23,7 +23,7 @@ public class AssetManagerDao extends CommonEntityDao<AssetManager> implements IA
     @Override
     protected IFetchProvider<AssetManager> createFetchProvider() {
         // TODO: uncomment the following line and specify the properties, which are required for the UI in IAssetManager.FETCH_PROVIDER. Then remove the line after.
-        // return FETCH_PROVIDER;
-        throw new UnsupportedOperationException("Please specify the properties, which are required for the UI in IAssetManager.FETCH_PROVIDER");
+        return FETCH_PROVIDER;
+        //throw new UnsupportedOperationException("Please specify the properties, which are required for the UI in IAssetManager.FETCH_PROVIDER");
     }
 }

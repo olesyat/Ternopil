@@ -35,6 +35,7 @@ import ua.com.fielden.platform.web.PrefDim.Unit;
  * @author Developers
  *
  */
+
 public class AssetTypeOperatorWebUiConfig {
 
     public final EntityCentre<AssetTypeOperator> centre;
@@ -78,8 +79,7 @@ public class AssetTypeOperatorWebUiConfig {
                 .addCrit("startDate").asRange().date().also()
                 .addCrit("role").asMulti().autocompleter(Role.class).also()
                 .addCrit("bu").asMulti().autocompleter(BusinessUnit.class).also()
-                .addCrit("org").asMulti().autocompleter(Organization.class).also()
-                .addCrit("desc").asMulti().text()
+                .addCrit("org").asMulti().autocompleter(Organization.class)
                 .setLayoutFor(Device.DESKTOP, Optional.empty(), layout)
                 .setLayoutFor(Device.TABLET, Optional.empty(), layout)
                 .setLayoutFor(Device.MOBILE, Optional.empty(), layout)
@@ -87,11 +87,12 @@ public class AssetTypeOperatorWebUiConfig {
                 .addProp("assetType").order(1).asc().minWidth(100)
                     .withSummary("total_count_", "COUNT(SELF)", format("Count:The total number of matching %ss.", AssetTypeOperator.ENTITY_TITLE))
                     .withActionSupplier(builder.getOpenMasterAction(AssetType.class)).also()
-                    .addProp("startDate").order(2).desc().width(150).also()
-                    .addProp("role").minWidth(100).also()
-                    .addProp("bu").minWidth(100).also()
-                    .addProp("org").minWidth(100)                
-                    .addPrimaryAction(standardEditAction)
+                .addProp("startDate").order(2).desc().width(150).also()
+                // when you have masters for Role, BU and ORG - add ActionSupplier to them as well
+                .addProp("role").minWidth(100).also()
+                .addProp("bu").minWidth(100).also()
+                .addProp("org").minWidth(100)
+                .addPrimaryAction(standardEditAction)
                 .build();
 
         return new EntityCentre<>(MiAssetTypeOperator.class, MiAssetTypeOperator.class.getSimpleName(), ecc, injector, null);
@@ -104,7 +105,7 @@ public class AssetTypeOperatorWebUiConfig {
      * @return created entity master
      */
     private EntityMaster<AssetTypeOperator> createMaster(final Injector injector) {
-        final String layout = LayoutComposer.mkGridForMasterFitWidth(2, 3);
+        final String layout = LayoutComposer.mkGridForMasterFitWidth(5, 1);
 
         final IMaster<AssetTypeOperator> masterConfig = new SimpleMasterBuilder<AssetTypeOperator>().forEntity(AssetTypeOperator.class)
                 .addProp("assetType").asAutocompleter().also()

@@ -10,11 +10,10 @@ import ua.com.fielden.platform.dao.IEntityDao;
  * @author Developers
  *
  */
+
 public interface IAssetServiceStatus extends IEntityDao<AssetServiceStatus> {
 
-    static final IFetchProvider<AssetServiceStatus> FETCH_PROVIDER = EntityUtils.fetch(AssetServiceStatus.class).with(
-        // TODO: uncomment the following line and specify the properties, which are required for the UI. Then remove the line after.
-        // "key", "desc");
-        "Please specify the properties, which are required for the UI");
+	 static final IFetchProvider<AssetServiceStatus> FETCH_PROVIDER = EntityUtils.fetch(AssetServiceStatus.class)
+	            .with("asset", "startDate", "serviceStatus");
 
 }

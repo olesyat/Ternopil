@@ -32,6 +32,7 @@ import ua.com.fielden.platform.web.view.master.api.impl.SimpleMasterBuilder;
  * @author Developers
  *
  */
+
 public class AssetServiceStatusWebUiConfig {
 
     public final EntityCentre<AssetServiceStatus> centre;
@@ -55,7 +56,7 @@ public class AssetServiceStatusWebUiConfig {
      * @return created entity centre
      */
     private EntityCentre<AssetServiceStatus> createCentre(final Injector injector, final IWebUiBuilder builder) {
-        final String layout = LayoutComposer.mkGridForCentre(1, 2);
+        final String layout = LayoutComposer.mkGridForCentre(1, 3);
 
         final EntityActionConfig standardNewAction = StandardActions.NEW_ACTION.mkAction(AssetServiceStatus.class);
         final EntityActionConfig standardDeleteAction = StandardActions.DELETE_ACTION.mkAction(AssetServiceStatus.class);
@@ -78,11 +79,11 @@ public class AssetServiceStatusWebUiConfig {
                 .setLayoutFor(Device.TABLET, Optional.empty(), layout)
                 .setLayoutFor(Device.MOBILE, Optional.empty(), layout)
                 .withScrollingConfig(standardStandaloneScrollingConfig(0))
-                .addProp("this").order(1).asc().minWidth(100)
-                    .withSummary("total_count_", "COUNT(SELF)", format("Count:The total number of matching %ss.", AssetServiceStatus.ENTITY_TITLE))
-                    .withAction(standardEditAction).also()
-                .addProp("desc").minWidth(100)
-                //.addProp("prop").minWidth(100).withActionSupplier(builder.getOpenMasterAction(Entity.class)).also()
+                .addProp("asset").order(1).asc().minWidth(100)
+                .withSummary("total_count_", "COUNT(SELF)", format("Count:The total number of matching %ss.", AssetServiceStatus.ENTITY_TITLE))
+                .withActionSupplier(builder.getOpenMasterAction(Asset.class)).also()
+                .addProp("startDate").order(2).desc().width(150).also()
+                .addProp("serviceStatus").order(3).asc().width(150)
                 .addPrimaryAction(standardEditAction)
                 .build();
 
@@ -96,7 +97,7 @@ public class AssetServiceStatusWebUiConfig {
      * @return created entity master
      */
     private EntityMaster<AssetServiceStatus> createMaster(final Injector injector) {
-        final String layout = LayoutComposer.mkGridForMasterFitWidth(1, 2);
+        final String layout = LayoutComposer.mkGridForMasterFitWidth(3, 1);
 
         final IMaster<AssetServiceStatus> masterConfig = new SimpleMasterBuilder<AssetServiceStatus>().forEntity(AssetServiceStatus.class)
                 .addProp("asset").asAutocompleter().also()

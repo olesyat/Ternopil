@@ -1,58 +1,40 @@
 package helsinki.tablecodes.asset.definers;
 
+import java.util.Set;
+
+import helsinki.tablecodes.asset.AssetOperator;
 import helsinki.tablecodes.asset.AssetTypeOperator;
+import ua.com.fielden.platform.entity.AbstractEntity;
 import ua.com.fielden.platform.entity.meta.IAfterChangeEventHandler;
 import ua.com.fielden.platform.entity.meta.MetaProperty;
+import ua.com.fielden.platform.error.Result;
+import ua.com.fielden.platform.utils.CollectionUtil;
+
+
 
 public class AssetTypeOperatorExclusivityDefiner implements IAfterChangeEventHandler<Object> {
+    
+    private final static Set<String> operatorshipPropNames = CollectionUtil.setOf("role", "bu", "org");
 
     @Override
-    public void handle(final MetaProperty<Object> prop, final Object value) {
+    public void handle(final MetaProperty<Object> property, final Object value) {
+        if (!(property.getEntity() instanceof AssetOperator) && !(property.getEntity() instanceof AssetTypeOperator)) {
+            throw Result.failure("Stringly entities of type AssetOperator or AssetTypeOperator are expected");
+        }
+        
+       final AbstractEntity<?> operatorship = property.getEntity();
+       final boolean allEmpty = operatorship.get("role") == null && operatorship.get("bu") == null && operatorship.get("org") == null;
        
-        final AssetTypeOperator operator = prop.getEntity();
-        
-        final boolean allEmpty = operator.getRole() == null && 
-                operator.getBu() == null && 
-                operator.getOrg() == null; 
-        
-        
-        if (operator.getRole() == null) {
-            operator.getProperty("role").setRequired(allEmpty);
-        }
-        if (operator.getBu() == null) {
-            operator.getProperty("bu").setRequired(allEmpty);
-        }
-        
-        if (operator.getOrg() == null) {
-            operator.getProperty("org").setRequired(allEmpty);
-        }
-        
-        if ("role".equals(prop.getName()) && value != null) {
-            operator.getProperty("bu").setRequired(false); 
-            operator.setBu(null); 
-            operator.getProperty("org").setRequired(false); 
-            operator.setOrg(null);
-            operator.getProperty("role").setRequired(true); 
-
-            }
-        
-        else if ("bu".equals(prop.getName()) && value != null) {
-            operator.getProperty("role").setRequired(false);
-            operator.setRole(null); 
-            operator.getProperty("org").setRequired(false); 
-            operator.setOrg(null);
-            operator.getProperty("bu").setRequired(true); 
-
-                        
-        }
-        else if ("org".equals(prop.getName()) && value != null) {        
-            operator.getProperty("role").setRequired(false);
-            operator.setRole(null); 
-            operator.getProperty("bu").setRequired(false); 
-            operator.setBu(null);
-            operator.getProperty("org").setRequired(true);     
-        }
-        
-    }
-
-}
+       operatorshipPropNames.stream()
+               .map(name -> operatorship.getProperty(name))
+               .filter(p -> p.getValue() == null)
+               .forEach(p -> p.setRequired(allEmpty));
+           
+       if (value != null) {
+           operatorshipPropNames.stream()
+                    .filter(name -> !name.equalsIgnoreCase(property.getName()))
+                    .map(name -> operatorship.getProperty(name))
+                    .forEach(p -> {p.setRequired(false);p.setValue(null);});
+           property.setRequired(true);
+       }
+}}
