@@ -1,0 +1,36 @@
+-------------------------------------------------------------------------------
+Test set: helsinki.assets.AssetTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 2, Errors: 4, Skipped: 0, Time elapsed: 56.822 s <<< FAILURE! - in helsinki.assets.AssetTest
+newly_saved_asset_has_number_generated(helsinki.assets.AssetTest)  Time elapsed: 11.753 s  <<< ERROR!
+ua.com.fielden.platform.error.Result: Required property [Type] is not specified for entity [Asset].
+	at helsinki.assets.AssetTest.newly_saved_asset_has_number_generated(AssetTest.java:57)
+Caused by: java.lang.Exception: Required property [Type] is not specified for entity [Asset].
+	at helsinki.assets.AssetTest.newly_saved_asset_has_number_generated(AssetTest.java:57)
+
+sequentially_created_assets_have_sequential_numbers(helsinki.assets.AssetTest)  Time elapsed: 0.248 s  <<< ERROR!
+ua.com.fielden.platform.error.Result: Required property [Type] is not specified for entity [Asset].
+	at helsinki.assets.AssetTest.sequentially_created_assets_have_sequential_numbers(AssetTest.java:78)
+Caused by: java.lang.Exception: Required property [Type] is not specified for entity [Asset].
+	at helsinki.assets.AssetTest.sequentially_created_assets_have_sequential_numbers(AssetTest.java:78)
+
+can_find_assets_by_fin_det_information(helsinki.assets.AssetTest)  Time elapsed: 0.068 s  <<< ERROR!
+ua.com.fielden.platform.error.Result: Required property [Type] is not specified for entity [Asset].
+	at helsinki.assets.AssetTest.can_find_assets_by_fin_det_information(AssetTest.java:139)
+Caused by: java.lang.Exception: Required property [Type] is not specified for entity [Asset].
+	at helsinki.assets.AssetTest.can_find_assets_by_fin_det_information(AssetTest.java:139)
+
+existing_assets_keep_their_original_numbers(helsinki.assets.AssetTest)  Time elapsed: 0.132 s  <<< ERROR!
+ua.com.fielden.platform.error.Result: Required property [Type] is not specified for entity [Asset].
+	at helsinki.assets.AssetTest.existing_assets_keep_their_original_numbers(AssetTest.java:68)
+Caused by: java.lang.Exception: Required property [Type] is not specified for entity [Asset].
+	at helsinki.assets.AssetTest.existing_assets_keep_their_original_numbers(AssetTest.java:68)
+
+concurrent_saving_of_assets_is_supported_even_with_repeated_saving_after_failures(helsinki.assets.AssetTest)  Time elapsed: 0.276 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[Deliberate save exception].> but was:<[Required property [Type] is not specified for entity [Asset]].>
+	at helsinki.assets.AssetTest.concurrent_saving_of_assets_is_supported_even_with_repeated_saving_after_failures(AssetTest.java:117)
+
+new_asset_can_be_saved_after_the_first_failed_attempt(helsinki.assets.AssetTest)  Time elapsed: 0.088 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[Deliberate save exception].> but was:<[Required property [Type] is not specified for entity [Asset]].>
+	at helsinki.assets.AssetTest.new_asset_can_be_saved_after_the_first_failed_attempt(AssetTest.java:95)
+

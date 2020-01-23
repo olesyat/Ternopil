@@ -1,0 +1,8 @@
+helsinki\assets\AssetTest.class
+helsinki\test_config\UniversalConstantsForTesting.class
+helsinki\example\PersonnelTest.class
+helsinki\test_config\AbstractDaoTestCase.class
+helsinki\test_config\H2DomainDrivenTestCaseRunner.class
+helsinki\tablecodes\assets\AssetClassTest.class
+helsinki\test_config\DaoDomainDrivenTestCaseConfiguration.class
+helsinki\test_config\H2DomainDrivenTestCaseRunner$H2TestContext.class
